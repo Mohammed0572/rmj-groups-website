@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Construction | RMJ Groups</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+
+  <script>
+    // THE GATEKEEPER
+    // 1. Check if the "Key" exists in browser memory
+    const isLoggedIn = localStorage.getItem('rmjUserLoggedIn');
+
+    // 2. If Key is missing or false...
+    if (isLoggedIn !== 'true') {
+        alert("Restricted Access: You must Log In or Sign Up to view our services.");
+        // 3. Kick them back to Home Page
+        window.location.href = "../index.html"; 
+    }
+</script>
+</head>
+<body>
+
+    <header class="navbar">
+        <a href="../index.html"><img src="../assets/images/rmj-main-logo.jpg" class="nav-logo-img"></a>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="construction.html" class="active" style="color:var(--gold)">Construction</a></li>
+                <li><a href="real-estate.html">Real Estate</a></li>
+                <li><a href="digital-marketing.html">Digital Marketing</a></li>
+                <li><a href="social-media.html">Social Media</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="cons-hero">
+        <div class="hero-left" style="text-align: center; padding: 140px 5% 50px;">
+            <span class="eyebrow" style="color:var(--gold); font-weight:600; letter-spacing:2px;">PMK CONSTRUCTIONS • BENGALURU</span>
+            <h1 style="font-size: 3rem; margin: 20px 0;">
+                CONSTRUCT YOUR <br><span class="gold-text">DREAM HOME</span><br>
+                <span style="font-size:0.6em; font-weight:400; color:white;">WITH</span><br>
+                <span class="hero-rotator">
+                    <span class="rotater-item">Transparent Pricing</span>
+                    <span class="rotater-item">Trusted Engineers</span>
+                    <span class="rotater-item">On-time Delivery</span>
+                </span>
+            </h1>
+            <p style="color:#ccc; max-width:800px; margin:0 auto;">Tech-enabled construction solutions across Bengaluru — design, approvals, execution & handover.</p>
+
+            <div class="hero-stats" style="display:flex; justify-content:center; gap:20px; margin-top:30px;">
+                <div class="stat-box"><h3>10,000+</h3><div>Homes Built</div></div>
+                <div class="stat-box"><h3>14,000+</h3><div>Floor Plans</div></div>
+                <div class="stat-box"><h3>95%+</h3><div>Satisfaction</div></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="content-section" style="background: rgba(255,255,255,0.02);">
+        <h2 style="text-align:center">How We Build Your Dream Home</h2>
+        <p style="text-align:center; color:#ccc; margin-bottom:40px;">A simple, transparent process — from consultation to handover.</p>
+        
+        <div class="steps-grid">
+            <div class="step-card">
+                <div class="step-icon">📞</div>
+                <h3>Consultation</h3>
+                <p>We listen to your needs, plot details and budget to propose the right approach.</p>
+            </div>
+            <div class="step-card">
+                <div class="step-icon">🧭</div>
+                <h3>Design & Planning</h3>
+                <p>Architects prepare floor plans, 3D renders and BOQs for your review.</p>
+            </div>
+            <div class="step-card">
+                <div class="step-icon">📄</div>
+                <h3>Approvals</h3>
+                <p>We assist with statutory approvals and documentation.</p>
+            </div>
+            <div class="step-card">
+                <div class="step-icon">🏗️</div>
+                <h3>Construction</h3>
+                <p>Experienced engineers manage procurement and site execution.</p>
+            </div>
+            <div class="step-card">
+                <div class="step-icon">🏠</div>
+                <h3>Handover</h3>
+                <p>We deliver the finished home, handover documents and warranties.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <h2 style="text-align:center">Featured Floor Plans</h2>
+        <p style="text-align:center; color:#ccc; margin-bottom:30px;">Filter and explore sample layouts.</p>
+        
+        <div class="filters-container">
+            <button class="floor-filter-btn active" onclick="filterSelection('all')">All</button>
+            <button class="floor-filter-btn" onclick="filterSelection('2bhk')">2BHK</button>
+            <button class="floor-filter-btn" onclick="filterSelection('3bhk')">3BHK</button>
+            <button class="floor-filter-btn" onclick="filterSelection('4bhk')">4BHK</button>
+            <button class="floor-filter-btn" onclick="filterSelection('duplex')">Duplex</button>
+        </div>
+
+        <div class="floor-grid">
+            <div class="floor-card column 2bhk">
+                <img src="https://i.pinimg.com/736x/a4/9a/ed/a49aed4643172ccde8c94c2d47dccc1b.jpg" alt="2BHK">
+                <div class="floor-content">
+                    <h3>2BHK Modern</h3>
+                    <p class="gold-text">Area: 1200 sq.ft • Est: ₹25 Lakhs</p>
+                </div>
+            </div>
+            <div class="floor-card column 3bhk">
+                <img src="https://happho.com/wp-content/uploads/2022/07/image01.jpg" alt="3BHK">
+                <div class="floor-content">
+                    <h3>3BHK Elegant</h3>
+                    <p class="gold-text">Area: 1800 sq.ft • Est: ₹38 Lakhs</p>
+                </div>
+            </div>
+            <div class="floor-card column 4bhk">
+                <img src="https://manage.nakshewala.com/assets/blog/01_1735966357.webp" alt="4BHK">
+                <div class="floor-content">
+                    <h3>4BHK Luxury</h3>
+                    <p class="gold-text">Area: 2400 sq.ft • Est: ₹58 Lakhs</p>
+                </div>
+            </div>
+            <div class="floor-card column duplex">
+                <img src="https://happho.com/wp-content/smush-webp/2020/01/ghar-038-30X50-duplex-First-Floor.jpg.webp" alt="Duplex">
+                <div class="floor-content">
+                    <h3>Duplex Premium</h3>
+                    <p class="gold-text">Area: 2600 sq.ft • Est: ₹62 Lakhs</p>
+                </div>
+            </div>
+            <div class="floor-card column 2bhk">
+                <img src="https://happho.com/wp-content/smush-webp/2022/08/IMAGE-2.1-1.jpg.webp" alt="2BHK">
+                <div class="floor-content">
+                    <h3>2BHK Compact</h3>
+                    <p class="gold-text">Area: 1000 sq.ft • Est: ₹21 Lakhs</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="content-section" style="background: rgba(255,255,255,0.02);">
+        <h2 style="text-align:center; color:var(--gold);">Construction Cost Estimator</h2>
+        <p style="text-align:center; margin-bottom:40px;">Enter area and choose finish to get an instant estimate.</p>
+
+        <div class="estimator-wrapper">
+            <label style="display:block; margin-bottom:8px; color:var(--gold);">Plot / Built-up area (sq ft)</label>
+            <input id="areaInput" type="number" placeholder="e.g., 1200" min="1" 
+                   style="width:100%; padding:15px; margin-bottom:20px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.2); color:white; border-radius:8px;">
+
+            <label style="display:block; margin-bottom:8px; color:var(--gold);">Construction Type</label>
+            <select id="typeInput" style="width:100%; padding:15px; margin-bottom:20px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.2); color:white; border-radius:8px;">
+                <option value="1700" style="color:black;">Basic — ₹1,700 / sq.ft</option>
+                <option value="2100" style="color:black;">Standard — ₹2,100 / sq.ft</option>
+                <option value="2600" style="color:black;">Premium — ₹2,600 / sq.ft</option>
+            </select>
+
+            <button onclick="estimate()" class="cta-button">Estimate Cost</button>
+
+            <div class="est-result" id="resultBox">
+                <h2 id="amountText" class="gold-text"></h2>
+                <p id="breakdownText" style="color:#ccc"></p>
+            </div>
+
+            <div style="margin-top:40px; padding-top:20px; border-top:1px solid rgba(255,255,255,0.1);">
+                <h3 style="color:white; margin-bottom:15px;">Book a Free Consultation</h3>
+                <form action="https://formspree.io/f/xovyawpo" method="POST">
+                    <input name="name" placeholder="Name" required style="width:100%; padding:12px; margin-bottom:10px; border-radius:5px; border:none;">
+                    <input name="phone" placeholder="Phone" required style="width:100%; padding:12px; margin-bottom:10px; border-radius:5px; border:none;">
+                    <input name="city" placeholder="City" value="Bengaluru" required style="width:100%; padding:12px; margin-bottom:10px; border-radius:5px; border:none;">
+                    <button type="submit" class="cta-button" style="margin-top:10px;">Submit Request</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer class="glass-footer">
+        <p>&copy; 2025 RMJ Groups. All Rights Reserved.</p>
+    </footer>
+
+    <script src="../assets/js/script.js"></script>
+</body>
+</html>

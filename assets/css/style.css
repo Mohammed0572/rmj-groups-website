@@ -1,0 +1,202 @@
+/* =========================================
+   1. VARIABLES & RESET
+   ========================================= */
+:root {
+    --navy-blue: #0a192f;
+    --navy-light: #112240;
+    --gold: #d4af37;
+    --white: #e6f1ff;
+    --glass: rgba(10, 25, 47, 0.95);
+    --transition: all 0.3s ease-in-out;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Montserrat', sans-serif; }
+body { background-color: var(--navy-blue); color: var(--white); overflow-x: hidden; }
+a { text-decoration: none; color: inherit; transition: var(--transition); }
+ul { list-style: none; }
+
+/* =========================================
+   2. NAVBAR (Fixed & Responsive)
+   ========================================= */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 5%;
+    background: var(--glass);
+    backdrop-filter: blur(10px);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.nav-logo-img { height: 50px; border-radius: 5px; }
+.nav-links { display: flex; gap: 20px; align-items: center; }
+
+.nav-links a {
+    font-size: 0.9rem; font-weight: 500; letter-spacing: 0.5px;
+}
+.nav-links a:hover, .nav-links a.active { color: var(--gold); }
+
+/* --- MOBILE NAVBAR FIX --- */
+@media (max-width: 900px) {
+    .navbar {
+        flex-direction: column;
+        padding: 10px 5%;
+        max-height: 300px; /* Limit height */
+        overflow-y: auto; /* Scroll if needed */
+    }
+    
+    .nav-logo-img { height: 40px; margin-bottom: 10px; }
+    
+    .nav-links {
+        flex-direction: row; /* Keep row but wrap */
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+        width: 100%;
+        padding-bottom: 10px;
+    }
+
+    .nav-links li { margin: 0; }
+    
+    .nav-links a {
+        font-size: 0.8rem;
+        padding: 6px 12px;
+        background: rgba(255,255,255,0.05);
+        border-radius: 4px;
+        white-space: nowrap; /* Prevent text breaking */
+    }
+}
+
+/* =========================================
+   3. HERO SECTION (Spacing Fix)
+   ========================================= */
+.hero-container {
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    /* Desktop Padding */
+    padding: 150px 20px 50px; 
+    background: radial-gradient(circle at center, var(--navy-light), var(--navy-blue));
+}
+
+.hero-container h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5rem;
+    margin-bottom: 20px;
+    line-height: 1.1;
+}
+
+.gold-text { color: var(--gold); }
+
+/* --- MOBILE HERO FIX --- */
+@media (max-width: 900px) {
+    .hero-container {
+        /* Increase top padding to clear the taller mobile navbar */
+        padding-top: 240px; 
+        padding-bottom: 40px;
+    }
+    .hero-container h1 { font-size: 2.2rem; }
+}
+
+/* =========================================
+   4. CARDS (Title Cards Fix)
+   ========================================= */
+.content-section { padding: 80px 5%; }
+
+.cards-wrapper {
+    display: grid;
+    /* Auto-fit: Creates as many columns as fit, min 280px wide */
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+    width: 100%;
+}
+
+.card {
+    background: var(--navy-light);
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+    /* Fix the "messed up" height */
+    height: 300px; 
+    cursor: pointer;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: var(--transition);
+}
+
+.card:hover { transform: translateY(-5px); border-color: var(--gold); }
+
+.card-bg-color {
+    height: 100%; width: 100%;
+    transition: var(--transition);
+    opacity: 0.6;
+    background-size: cover !important;
+    background-position: center !important;
+}
+
+.card:hover .card-bg-color { opacity: 0.2; transform: scale(1.05); }
+
+.card-content {
+    position: absolute; bottom: 0; left: 0; width: 100%;
+    padding: 20px;
+    background: linear-gradient(to top, var(--navy-blue), transparent);
+}
+
+.card-content h3 { font-size: 1.4rem; margin-bottom: 5px; color: var(--white); }
+.card-content p { color: var(--gold); font-size: 0.9rem; }
+
+/* Mobile Card Adjustments */
+@media (max-width: 600px) {
+    .cards-wrapper {
+        gap: 20px;
+        /* Force 1 column on very small screens to look clean */
+        grid-template-columns: 1fr; 
+    }
+    .card { height: 250px; } /* Shorter cards on mobile */
+}
+
+/* =========================================
+   5. UTILITIES (Modal, Splash, Footer)
+   ========================================= */
+.cta-button {
+    background: var(--gold); color: var(--navy-blue);
+    padding: 12px 30px; border: none; border-radius: 5px;
+    font-weight: 700; cursor: pointer; width: 100%;
+}
+.cta-button:hover { background: var(--white); }
+
+.modal-overlay {
+    display: none; position: fixed; top: 0; left: 0;
+    width: 100%; height: 100%; background: rgba(0,0,0,0.85);
+    z-index: 2000; justify-content: center; align-items: center; padding: 20px;
+}
+.modal-content {
+    background: var(--navy-light); padding: 30px; width: 100%; max-width: 400px;
+    border-radius: 15px; border: 1px solid var(--gold); text-align: center;
+}
+.input-group { margin-bottom: 15px; }
+input { width: 100%; padding: 12px; border-radius: 5px; border: 1px solid #444; background: #222; color: white; }
+
+.glass-footer {
+    background: var(--navy-light); text-align: center; padding: 30px;
+    border-top: 1px solid rgba(255,255,255,0.1); color: #888;
+}
+.intro-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+    background: var(--navy-blue); z-index: 9999;
+    display: flex; justify-content: center; align-items: center;
+    transition: transform 0.8s ease-in-out;
+}
+.loading-bar { width: 200px; height: 3px; background: rgba(255,255,255,0.1); }
+.loading-bar::after {
+    content: ''; display: block; height: 100%; width: 0%;
+    background: var(--gold); animation: load 2.5s ease forwards;
+}
+@keyframes load { to { width: 100%; } }

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real Estate | RMJ Groups</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    
+    <script>
+    // THE GATEKEEPER
+    // 1. Check if the "Key" exists in browser memory
+    const isLoggedIn = localStorage.getItem('rmjUserLoggedIn');
+
+    // 2. If Key is missing or false...
+    if (isLoggedIn !== 'true') {
+        alert("Restricted Access: You must Log In or Sign Up to view our services.");
+        // 3. Kick them back to Home Page
+        window.location.href = "../index.html"; 
+    }
+</script>
+</head>
+<body>
+    <header class="navbar">
+        <a href="../index.html"><img src="../assets/images/rmj-main-logo.jpg" class="nav-logo-img"></a>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="construction.html">Construction</a></li>
+                <li><a href="real-estate.html" class="active" style="color:var(--gold)">Real Estate</a></li>
+                <li><a href="digital-marketing.html">Digital Marketing</a></li>
+                <li><a href="social-media.html">Social Media</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="hero-container" style="min-height: 50vh; padding-top: 120px;">
+        <h1 class="gold-text">Premium Properties</h1>
+        <p>Find your next home or investment in Bengaluru.</p>
+    </div>
+
+    <section class="content-section" style="padding: 0 5% 50px;">
+        <div class="cards-wrapper" style="height: auto; flex-wrap: wrap;">
+            
+            <div class="card" style="flex: 1 1 300px; height: 400px;">
+                <div class="card-bg-color" style="background: url('https://images.unsplash.com/photo-1600596542815-3ad19fb2a258?auto=format&fit=crop&w=800') center/cover;"></div>
+                <div class="card-content">
+                    <h3>Whitefield Luxury</h3>
+                    <p>3BHK Apartment • ₹1.2 Cr</p>
+                    <button class="cta-button" style="width:auto; margin-top:10px;">View Details</button>
+                </div>
+            </div>
+
+            <div class="card" style="flex: 1 1 300px; height: 400px;">
+                <div class="card-bg-color" style="background: url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800') center/cover;"></div>
+                <div class="card-content">
+                    <h3>Indiranagar Villa</h3>
+                    <p>4BHK Independent • ₹4.5 Cr</p>
+                    <button class="cta-button" style="width:auto; margin-top:10px;">View Details</button>
+                </div>
+            </div>
+
+            <div class="card" style="flex: 1 1 300px; height: 400px;">
+                <div class="card-bg-color" style="background: url('https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=800') center/cover;"></div>
+                <div class="card-content">
+                    <h3>Hebbal High-Rise</h3>
+                    <p>2BHK Smart Home • ₹85 L</p>
+                    <button class="cta-button" style="width:auto; margin-top:10px;">View Details</button>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <footer class="glass-footer">
+        <p>&copy; 2025 RMJ Groups. All Rights Reserved.</p>
+    </footer>
+    
+    <script src="../assets/js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Marketing | RMJ Groups</title>
+    
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+
+    <script>
+        if (localStorage.getItem('rmjUserLoggedIn') !== 'true') {
+            alert("Restricted Access: Please login on the Home Page.");
+            window.location.href = "../index.html";
+        }
+    </script>
+
+    <style>
+        .benefit-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px; margin-top: 30px;
+        }
+        .benefit-card {
+            background: rgba(255,255,255,0.05); padding: 20px; border-radius: 10px;
+            text-align: center; border: 1px solid rgba(255,255,255,0.1);
+        }
+        .benefit-card i { font-size: 2rem; color: var(--gold); margin-bottom: 15px; }
+        
+        .service-row {
+            display: flex; flex-wrap: wrap; gap: 30px; margin-top: 50px;
+            align-items: center; justify-content: center;
+        }
+        .service-text { flex: 1; min-width: 300px; text-align: left; }
+        .service-text h3 { color: var(--gold); font-size: 1.5rem; margin-bottom: 10px; }
+        .service-text ul { list-style: none; padding-left: 0; }
+        .service-text li { margin-bottom: 8px; position: relative; padding-left: 20px; }
+        .service-text li::before { content: "•"; color: var(--gold); position: absolute; left: 0; }
+        
+        .cta-box {
+            background: linear-gradient(45deg, rgba(10, 25, 47, 0.9), rgba(212, 175, 55, 0.2));
+            padding: 40px; margin-top: 60px; border-radius: 15px; border: 1px solid var(--gold);
+        }
+    </style>
+</head>
+<body>
+
+    <header class="navbar">
+        <a href="../index.html"><img src="../assets/images/rmj-main-logo.jpg" class="nav-logo-img"></a>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="construction.html">Construction</a></li>
+                <li><a href="real-estate.html">Real Estate</a></li>
+                <li><a href="digital-marketing.html" class="active" style="color:var(--gold)">Digital</a></li>
+                <li><a href="social-media.html">Social Media</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="hero-container" style="min-height: 60vh; padding-top: 140px;">
+        <h1 class="gold-text">RMJ Digital Marketing</h1>
+        <p style="max-width: 700px; margin: 20px auto; color: #ccc;">
+            The utilization of digital technology to promote products or services. We encompass online channels such as websites, social media, search engines, email, and mobile applications.
+        </p>
+        <p style="font-size: 0.9rem; color: var(--gold);">
+            "Increasingly significant in today's business landscape."
+        </p>
+    </div>
+
+    <section class="content-section" style="padding: 50px 5%; text-align: center;">
+        <h2>Advantages of Digital Marketing</h2>
+        <div class="benefit-grid">
+            <div class="benefit-card">
+                <i class="fa-solid fa-earth-americas"></i>
+                <h3>Wider Reach</h3>
+                <p>Access global audiences instantly.</p>
+            </div>
+            <div class="benefit-card">
+                <i class="fa-solid fa-bullseye"></i>
+                <h3>Precise Targeting</h3>
+                <p>Reach exactly who you need.</p>
+            </div>
+            <div class="benefit-card">
+                <i class="fa-solid fa-chart-line"></i>
+                <h3>Measurable Results</h3>
+                <p>Track outcomes in real-time.</p>
+            </div>
+            <div class="benefit-card">
+                <i class="fa-solid fa-coins"></i>
+                <h3>Cost Effective</h3>
+                <p>Higher ROI than traditional media.</p>
+            </div>
+            <div class="benefit-card">
+                <i class="fa-solid fa-comments"></i>
+                <h3>Engagement</h3>
+                <p>Interactive two-way communication.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="content-section" style="background: rgba(255,255,255,0.02); padding: 50px 5%;">
+        <h2 style="text-align: center; margin-bottom: 40px;">Core Digital Strategies</h2>
+
+        <div class="service-row">
+            <div class="service-text">
+                <h3><i class="fa-solid fa-laptop-code"></i> Website & SEO</h3>
+                <p>Importance of a well-designed website.</p>
+                <ul>
+                    <li>Optimizing websites for search engines.</li>
+                    <li>Improving visibility and ranking.</li>
+                    <li>Driving organic traffic.</li>
+                </ul>
+            </div>
+            <div class="service-text">
+                <h3><i class="fa-brands fa-instagram"></i> Social Media Marketing</h3>
+                <p>The power of social platforms.</p>
+                <ul>
+                    <li>Creating compelling content.</li>
+                    <li>Two-way communication.</li>
+                    <li>Leveraging analytics for better results.</li>
+                </ul>
+            </div>
+        </div>
+
+        <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 40px 0;">
+
+        <div class="service-row">
+            <div class="service-text">
+                <h3><i class="fa-regular fa-envelope"></i> Email Marketing</h3>
+                <p>Effectiveness of direct communication.</p>
+                <ul>
+                    <li>Building an email list.</li>
+                    <li>Crafting personalized campaigns.</li>
+                    <li>Analyzing email metrics (Open rates/Clicks).</li>
+                </ul>
+            </div>
+            <div class="service-text">
+                <h3><i class="fa-solid fa-pen-nib"></i> Content Marketing</h3>
+                <p>Building brand authority.</p>
+                <ul>
+                    <li>Providing valuable information.</li>
+                    <li>Creating relevant and engaging content.</li>
+                    <li>Distribution across multiple channels.</li>
+                </ul>
+            </div>
+        </div>
+
+        <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 40px 0;">
+
+        <div class="service-row" style="justify-content: center;">
+            <div class="service-text" style="text-align: center; max-width: 600px;">
+                <h3><i class="fa-solid fa-bullhorn"></i> Pay-Per-Click (PPC)</h3>
+                <p>Driving immediate and targeted traffic via Platform Ads.</p>
+                <ul style="display: inline-block; text-align: left;">
+                    <li>Setting up campaigns.</li>
+                    <li>Optimizing keywords.</li>
+                    <li>Monitoring performance.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+<section class="content-section" style="padding: 0 5% 50px; text-align: center;">
+        <div class="cta-box">
+            <h2>Start Your Digital Journey</h2>
+            <p style="margin: 20px 0; color: #ddd;">
+                Digital marketing is significant for businesses in today's digital age. 
+                Stay competitive by implementing these strategies today.
+            </p>
+            
+            <button class="cta-button" style="max-width: 250px; margin: 0 auto;" 
+                    onclick="window.open('https://wa.me/918095835460', '_blank')">
+                <i class="fa-brands fa-whatsapp" style="margin-right: 8px;"></i> Chat on WhatsApp
+            </button>
+        </div>
+    </section>
+
+    <footer class="glass-footer">
+        <p>&copy; 2025 RMJ Groups. All Rights Reserved.</p>
+    </footer>
+
+    <script src="../assets/js/script.js"></script>
+</body>
+</html>
