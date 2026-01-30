@@ -1,3 +1,4 @@
-2025/12/24-13:50:16.383 45f0 Reusing MANIFEST C:\Users\moham\Desktop\RMT Groups\backend\.wwebjs_auth\session\Default\Session Storage/MANIFEST-000001
-2025/12/24-13:50:16.383 45f0 Recovering log #3
-2025/12/24-13:50:16.384 45f0 Reusing old log C:\Users\moham\Desktop\RMT Groups\backend\.wwebjs_auth\session\Default\Session Storage/000003.log 
+2025/12/28-22:43:45.702 4c24 Creating DB C:\Users\moham\Desktop\RMJ Groups\backend\.wwebjs_auth\session\Default\Session Storage since it was missing.
+2025/12/28-22:43:45.706 4c24 Reusing MANIFEST C:\Users\moham\Desktop\RMJ Groups\backend\.wwebjs_auth\session\Default\Session Storage/MANIFEST-000001
+2025/12/28-22:43:45.707 4c24 Recovering log #3
+2025/12/28-22:43:45.707 4c24 Reusing old log C:\Users\moham\Desktop\RMJ Groups\backend\.wwebjs_auth\session\Default\Session Storage/000003.log 

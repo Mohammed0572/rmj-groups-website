@@ -1,20 +1,36 @@
 /* =========================================
-   CONFIGURATION (PASTE YOUR URL HERE)
+   CONFIGURATION
    ========================================= */
 
-const BACKEND_URL = 'https://shaky-mice-stop.loca.lt'; 
+const BACKEND_URL = 'http://localhost:5000';
+
+// EmailJS Configuration
+const EMAILJS_CONFIG = {
+    publicKey: 'vDcpd9HDuIOKsUlGP',
+    serviceId: 'service_cwzmjz5',
+    signupTemplateId: 'template_nzt64d6',
+    resetTemplateId: 'template_p4knsqh'
+};
+
+// Local OTP storage (for verification)
+let localOtpStore = {};
 
 /* =========================================
    1. UI LOGIC (NAVBAR & SPLASH SCREEN)
    ========================================= */
 
 window.addEventListener('load', () => {
-    updateNavbar(); 
+    updateNavbar();
     const intro = document.getElementById('intro');
     if (intro) {
         setTimeout(() => {
             intro.style.transform = 'translateY(-100%)';
-        }, 2500);
+
+            // Show event popup after loading screen
+            setTimeout(() => {
+                showEventPopup();
+            }, 500);
+        }, 800); // Reduced from 2500ms to 800ms for faster loading
     }
 });
 
@@ -43,10 +59,30 @@ function updateNavbar() {
 }
 
 /* =========================================
-   2. AUTHENTICATION SYSTEM
+   EVENT POPUP FUNCTIONS
    ========================================= */
 
-let authMode = 'login'; 
+function showEventPopup() {
+    const popup = document.getElementById('eventPopup');
+    if (popup) {
+        popup.style.display = 'flex';
+        sessionStorage.setItem('eventPopupShown', 'true');
+    }
+}
+
+function closeEventPopup() {
+    const popup = document.getElementById('eventPopup');
+    if (popup) {
+        popup.style.display = 'none';
+    }
+}
+
+/* =========================================
+   2. AUTHENTICATION SYSTEM (Email OTP)
+   ========================================= */
+
+let authMode = 'login';
+let otpVerified = false; // Track if OTP has been verified for signup/forgot
 
 function checkLogin(destinationPage) {
     const isLoggedIn = localStorage.getItem('rmjUserLoggedIn');
@@ -63,6 +99,7 @@ function openLoginModal() {
     if (modal) {
         modal.style.display = 'flex';
         authMode = 'login';
+        otpVerified = false;
         updateModalUI();
     }
 }
@@ -70,208 +107,350 @@ function openLoginModal() {
 function closeLogin() {
     const modal = document.getElementById('loginModal');
     if (modal) modal.style.display = 'none';
+    otpVerified = false;
 }
 
 function logout() {
     localStorage.removeItem('rmjUserLoggedIn');
+    localStorage.removeItem('rmjCurrentUser');
     alert("Logged out successfully.");
     location.reload();
 }
 
 function toggleAuthMode() {
     authMode = (authMode === 'login') ? 'signup' : 'login';
+    otpVerified = false;
     updateModalUI();
 }
 
 function toggleForgotMode() {
     authMode = 'forgot';
+    otpVerified = false;
     updateModalUI();
 }
 
 function updateModalUI() {
     const title = document.getElementById('modalTitle');
+    const subtitle = document.getElementById('modalSubtitle');
     const signupFields = document.getElementById('signupFields');
     const passGroup = document.getElementById('passGroup');
     const newPassGroup = document.getElementById('newPassGroup');
+    const otpBtnGroup = document.getElementById('otpBtnGroup');
+    const otpGroup = document.getElementById('otpGroup');
     const btn = document.getElementById('submitBtn');
     const forgotLink = document.getElementById('forgotLink');
     const toggleText = document.getElementById('toggleText');
-    const link = toggleText.nextElementSibling;
-    const userName = document.getElementById('userName');
+    const link = toggleText ? toggleText.nextElementSibling : null;
+    const otpBtn = document.getElementById('otpBtn');
 
-    signupFields.style.display = 'none';
-    passGroup.style.display = 'block';
-    newPassGroup.style.display = 'none';
-    forgotLink.style.display = 'block';
-    userName.style.display = 'block'; 
+    // Reset all fields
+    if (signupFields) signupFields.style.display = 'none';
+    if (passGroup) passGroup.style.display = 'block';
+    if (newPassGroup) newPassGroup.style.display = 'none';
+    if (otpBtnGroup) otpBtnGroup.style.display = 'none';
+    if (otpGroup) otpGroup.style.display = 'none';
+    if (forgotLink) forgotLink.style.display = 'block';
+    if (otpBtn) {
+        otpBtn.innerText = '📧 Send OTP to Email';
+        otpBtn.disabled = false;
+    }
 
     if (authMode === 'signup') {
-        title.innerText = "Create Account";
-        signupFields.style.display = 'block'; 
-        passGroup.style.display = 'block';
-        btn.innerText = "Verify & Sign Up";
-        forgotLink.style.display = 'none';
-        toggleText.innerText = "Already have an account? ";
-        link.innerText = "Login";
-    } 
+        if (title) title.innerText = "Create Account";
+        if (subtitle) subtitle.innerText = "Join RMJ Groups today";
+        if (signupFields) signupFields.style.display = 'block';
+        if (otpBtnGroup) otpBtnGroup.style.display = 'block';
+        if (passGroup) passGroup.style.display = otpVerified ? 'block' : 'none';
+        if (btn) btn.innerText = otpVerified ? "Create Account" : "Verify OTP & Continue";
+        if (forgotLink) forgotLink.style.display = 'none';
+        if (toggleText) toggleText.innerText = "Already have an account? ";
+        if (link) link.innerText = "Login";
+    }
     else if (authMode === 'forgot') {
-        title.innerText = "Reset Password";
-        signupFields.style.display = 'block'; 
-        userName.style.display = 'none'; 
-        passGroup.style.display = 'none'; 
-        newPassGroup.style.display = 'block'; 
-        btn.innerText = "Reset Password";
-        forgotLink.style.display = 'none';
-        toggleText.innerText = "Remembered password? ";
-        link.innerText = "Login";
-    } 
-    else {
-        title.innerText = "Sign In";
-        btn.innerText = "Login";
-        toggleText.innerText = "New here? ";
-        link.innerText = "Create Account";
+        if (title) title.innerText = "Reset Password";
+        if (subtitle) subtitle.innerText = "We'll send you a verification code";
+        if (otpBtnGroup) otpBtnGroup.style.display = 'block';
+        if (passGroup) passGroup.style.display = 'none';
+        if (newPassGroup) newPassGroup.style.display = otpVerified ? 'block' : 'none';
+        if (btn) btn.innerText = otpVerified ? "Reset Password" : "Verify OTP & Continue";
+        if (forgotLink) forgotLink.style.display = 'none';
+        if (toggleText) toggleText.innerText = "Remembered password? ";
+        if (link) link.innerText = "Login";
+    }
+    else { // login
+        if (title) title.innerText = "Sign In";
+        if (subtitle) subtitle.innerText = "Welcome back to RMJ Groups";
+        if (btn) btn.innerText = "Login";
+        if (toggleText) toggleText.innerText = "New here? ";
+        if (link) link.innerText = "Create Account";
     }
 }
 
-// === SEND OTP (Uses BACKEND_URL) ===
-async function sendOTP() {
-    const phoneInput = document.getElementById('userPhone');
+// === SEND EMAIL OTP via EmailJS (For Signup & Forgot Password) ===
+async function sendEmailOTP() {
     const emailInput = document.getElementById('userEmail');
     const otpBtn = document.getElementById('otpBtn');
     const otpGroup = document.getElementById('otpGroup');
-    
-    let phone = phoneInput.value;
 
-    if (authMode === 'forgot') {
-        if (!emailInput.value) return alert("Please enter your registered Email first.");
-        
-        otpBtn.innerText = "Finding...";
-        try {
-            // Using the Variable here
-            const res = await fetch(`${BACKEND_URL}/api/get-phone`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email: emailInput.value })
-            });
-            const data = await res.json();
-            
-            if (!data.success) {
-                otpBtn.innerText = "Get OTP";
-                return alert(data.message);
-            }
-            phone = data.phone;
-            phoneInput.value = phone;
-            alert("Found registered number: " + phone);
-        } catch (e) {
-            otpBtn.innerText = "Get OTP";
-            return alert("Connection Error: Check URL in script.js");
-        }
-    }
+    const email = emailInput.value.trim();
 
-    if (!phone || phone.length < 10) {
-        alert("Please enter a valid WhatsApp number.");
+    if (!email || !email.includes('@')) {
+        alert("Please enter a valid email address.");
         return;
     }
 
     otpBtn.innerText = "Sending...";
     otpBtn.disabled = true;
 
+    const purpose = authMode === 'signup' ? 'signup' : 'forgot';
+    const purposeText = purpose === 'signup' ? 'Verify Your Email' : 'Reset Your Password';
+
+    // Generate 6-digit OTP locally
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
+
+    // Store OTP locally with expiry (10 minutes)
+    localOtpStore[email] = {
+        otp: otp,
+        purpose: purpose,
+        expiresAt: Date.now() + 10 * 60 * 1000
+    };
+
+    // Choose template based on purpose
+    const templateId = purpose === 'signup'
+        ? EMAILJS_CONFIG.signupTemplateId
+        : EMAILJS_CONFIG.resetTemplateId;
+
     try {
-        // Using the Variable here
-        const response = await fetch(`${BACKEND_URL}/api/send-otp`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ phone })
+        // Send email via EmailJS
+        await emailjs.send(EMAILJS_CONFIG.serviceId, templateId, {
+            to_email: email,
+            otp: otp,
+            purpose: purposeText
         });
-        
-        const result = await response.json();
-        
-        if (result.success) {
-            alert(result.message); 
-            otpBtn.innerText = "Resend";
-            otpBtn.disabled = false;
-            otpGroup.style.display = 'block';
-            document.getElementById('userOTP').focus();
-        } else {
-            alert(result.message);
-            otpBtn.innerText = "Get OTP";
-            otpBtn.disabled = false;
-        }
-    } catch (err) {
-        console.error(err);
-        alert("Connection Error. Did you update the BACKEND_URL?");
-        otpBtn.innerText = "Get OTP";
+
+        alert("📧 OTP sent to your email!");
+        otpBtn.innerText = "📧 Resend OTP";
         otpBtn.disabled = false;
+        otpGroup.style.display = 'block';
+        document.getElementById('userOTP').focus();
+
+    } catch (err) {
+        // Fallback: Show OTP in alert if email fails
+        alert(`📧 Your OTP Code is: ${otp}\n\n(Email delivery issue - use this code)`);
+        otpBtn.innerText = "📧 Resend OTP";
+        otpBtn.disabled = false;
+        otpGroup.style.display = 'block';
+        document.getElementById('userOTP').focus();
     }
 }
 
-// === HANDLE AUTH (Uses BACKEND_URL) ===
+// === VERIFY OTP LOCALLY ===
+function verifyLocalOTP(email, otp) {
+    const storedData = localOtpStore[email];
+
+    if (!storedData) {
+        return { success: false, message: "No OTP found. Please request a new one." };
+    }
+
+    if (Date.now() > storedData.expiresAt) {
+        delete localOtpStore[email];
+        return { success: false, message: "OTP expired. Please request a new one." };
+    }
+
+    if (storedData.otp !== otp) {
+        return { success: false, message: "Invalid OTP. Please try again." };
+    }
+
+    return { success: true, message: "OTP verified!", purpose: storedData.purpose };
+}
+
+// === HANDLE AUTH (Login with Password, Signup/Forgot with Local OTP Verification) ===
 async function handleAuth(event) {
     event.preventDefault();
     const btn = document.getElementById('submitBtn');
     const originalText = btn.innerText;
     btn.innerText = "Processing...";
 
-    const email = document.getElementById('userEmail').value;
-    const password = document.getElementById('userPassword').value;
-    const name = document.getElementById('userName').value;
-    const phone = document.getElementById('userPhone').value;
-    const otp = document.getElementById('userOTP').value;
-    const newPass = document.getElementById('newPassword').value;
-
-    let endpoint = '', data = {};
-
-    if (authMode === 'login') {
-        endpoint = '/api/login';
-        data = { email, password };
-    } 
-    else if (authMode === 'signup') {
-        if (!otp) { alert("Please enter OTP"); btn.innerText = originalText; return; }
-        endpoint = '/api/signup';
-        data = { name, email, phone, password, otp };
-
-        const fsData = new FormData();
-        fsData.append('name', name);
-        fsData.append('email', email);
-        fsData.append('phone', phone);
-        fsData.append('Subject', 'New Secured User Signup');
-        fetch('https://formspree.io/f/xovyawpo', { method: 'POST', body: fsData, headers: {'Accept':'application/json'} })
-            .catch(e => console.log("Email skipped"));
-    } 
-    else if (authMode === 'forgot') {
-        if (!otp || !newPass) { alert("Please enter OTP and New Password"); btn.innerText = originalText; return; }
-        endpoint = '/api/reset-password';
-        data = { email, otp, newPassword: newPass };
-    }
+    const email = document.getElementById('userEmail').value.trim();
+    const password = document.getElementById('userPassword')?.value || '';
+    const otp = document.getElementById('userOTP')?.value || '';
 
     try {
-        // Using the Variable here
-        const res = await fetch(`${BACKEND_URL}${endpoint}`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data)
-        });
-        const result = await res.json();
+        if (authMode === 'login') {
+            // Login with email + password (using backend)
+            const response = await fetch(`${BACKEND_URL}/api/login`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password })
+            });
 
-        if (result.success) {
-            alert(result.message);
-            
-            if (authMode === 'forgot') {
-                toggleAuthMode();
-            } else {
+            const result = await response.json();
+
+            if (result.success) {
                 localStorage.setItem('rmjUserLoggedIn', 'true');
-                window.location.href = localStorage.getItem('redirectAfterLogin') || 'index.html';
+                localStorage.setItem('rmjCurrentUser', JSON.stringify(result.user));
+                alert(`Welcome back, ${result.user.name}!`);
+                closeLogin();
+                const redirect = localStorage.getItem('redirectAfterLogin');
+                if (redirect) {
+                    localStorage.removeItem('redirectAfterLogin');
+                    window.location.href = redirect;
+                } else {
+                    location.reload();
+                }
+            } else {
+                alert(result.message || "Invalid email or password.");
+                btn.innerText = originalText;
             }
-        } else {
-            alert(result.message);
+        }
+        else if (authMode === 'signup') {
+            const name = document.getElementById('userName')?.value.trim() || '';
+
+            if (!otp) {
+                alert("Please get an OTP first and enter it.");
+                btn.innerText = originalText;
+                return;
+            }
+
+            if (!otpVerified) {
+                // Verify OTP locally
+                const verifyResult = verifyLocalOTP(email, otp);
+
+                if (verifyResult.success) {
+                    otpVerified = true;
+                    alert("Email verified! Now set your password.");
+                    document.getElementById('passGroup').style.display = 'block';
+                    document.getElementById('submitBtn').innerText = "Create Account";
+                    document.getElementById('userPassword').focus();
+                } else {
+                    alert(verifyResult.message);
+                }
+                btn.innerText = originalText;
+                return;
+            }
+
+            // OTP already verified, now create account via backend
+            if (!name || !password) {
+                alert("Please enter your name and password.");
+                btn.innerText = originalText;
+                return;
+            }
+
+            const response = await fetch(`${BACKEND_URL}/api/signup-email`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, email, password, otp })
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                delete localOtpStore[email]; // Clean up local OTP
+                alert(`Account created successfully! Welcome, ${name}!`);
+                localStorage.setItem('rmjUserLoggedIn', 'true');
+                localStorage.setItem('rmjCurrentUser', JSON.stringify({ name, email }));
+                closeLogin();
+                const redirect = localStorage.getItem('redirectAfterLogin');
+                if (redirect) {
+                    localStorage.removeItem('redirectAfterLogin');
+                    window.location.href = redirect;
+                } else {
+                    location.reload();
+                }
+            } else {
+                alert(result.message || "Failed to create account.");
+                btn.innerText = originalText;
+            }
+        }
+        else if (authMode === 'forgot') {
+            const newPassword = document.getElementById('newPassword')?.value || '';
+
+            if (!otp) {
+                alert("Please get an OTP first and enter it.");
+                btn.innerText = originalText;
+                return;
+            }
+
+            if (!otpVerified) {
+                // Verify OTP locally
+                const verifyResult = verifyLocalOTP(email, otp);
+
+                if (verifyResult.success) {
+                    otpVerified = true;
+                    alert("OTP verified! Now set your new password.");
+                    document.getElementById('newPassGroup').style.display = 'block';
+                    document.getElementById('submitBtn').innerText = "Reset Password";
+                    document.getElementById('newPassword').focus();
+                } else {
+                    alert(verifyResult.message);
+                }
+                btn.innerText = originalText;
+                return;
+            }
+
+            // OTP verified, now reset password via backend
+            if (!newPassword) {
+                alert("Please enter a new password.");
+                btn.innerText = originalText;
+                return;
+            }
+
+            const response = await fetch(`${BACKEND_URL}/api/reset-password-email`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, otp, newPassword })
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                delete localOtpStore[email]; // Clean up local OTP
+                alert("Password reset successfully! Please login.");
+                authMode = 'login';
+                otpVerified = false;
+                updateModalUI();
+            } else {
+                alert(result.message || "Failed to reset password.");
+            }
             btn.innerText = originalText;
         }
-    } catch (e) {
-        console.error(e);
-        alert("Connection Error. Check URL in script.js");
+    } catch (err) {
+        alert("Connection Error. Make sure the backend server is running.");
         btn.innerText = originalText;
     }
 }
+
+/* =========================================
+   2.1 LOCKED CARDS SYSTEM
+   ========================================= */
+
+function initLockedCards() {
+    const isLoggedIn = localStorage.getItem('rmjUserLoggedIn') === 'true';
+    const cards = document.querySelectorAll('.locked-card');
+
+    cards.forEach(card => {
+        const overlay = card.querySelector('.card-lock-overlay');
+        const destination = card.dataset.destination;
+
+        if (isLoggedIn) {
+            // Unlocked - hide overlay and enable click
+            if (overlay) overlay.style.display = 'none';
+            card.style.cursor = 'pointer';
+            card.onclick = () => window.location.href = destination;
+        } else {
+            // Locked - show overlay and prompt login on click
+            if (overlay) overlay.style.display = 'flex';
+            card.style.cursor = 'pointer';
+            card.onclick = () => {
+                localStorage.setItem('redirectAfterLogin', destination);
+                openLoginModal();
+            };
+        }
+    });
+}
+
+// Initialize locked cards when page loads
+document.addEventListener('DOMContentLoaded', initLockedCards);
 
 /* =========================================
    3. CONSTRUCTION PAGE TOOLS
@@ -288,17 +467,17 @@ function estimate() {
 
     const area = parseFloat(areaInput.value);
     const rate = parseFloat(typeInput.value);
-    
+
     if (!area || area <= 0) {
         alert('Please enter a valid area.');
         return;
     }
-    
+
     const total = area * rate;
-    
+
     amountText.textContent = 'Estimated Cost: ₹' + total.toLocaleString('en-IN');
     if (breakdownText) breakdownText.textContent = `Rate: ₹${rate} x ${area} sq.ft`;
-    
+
     resultBox.style.display = 'block';
 }
 
@@ -333,7 +512,7 @@ function w3AddClass(element, name) {
     arr1 = element.className.split(" ");
     arr2 = name.split(" ");
     for (i = 0; i < arr2.length; i++) {
-        if (arr1.indexOf(arr2[i]) == -1) {element.className += " " + arr2[i];}
+        if (arr1.indexOf(arr2[i]) == -1) { element.className += " " + arr2[i]; }
     }
 }
 
@@ -343,7 +522,7 @@ function w3RemoveClass(element, name) {
     arr2 = name.split(" ");
     for (i = 0; i < arr2.length; i++) {
         while (arr1.indexOf(arr2[i]) > -1) {
-            arr1.splice(arr1.indexOf(arr2[i]), 1);     
+            arr1.splice(arr1.indexOf(arr2[i]), 1);
         }
     }
     element.className = arr1.join(" ");
@@ -357,7 +536,7 @@ styleSheet.innerText = `
 `;
 document.head.appendChild(styleSheet);
 
-window.onclick = function(event) {
+window.onclick = function (event) {
     const modal = document.getElementById('loginModal');
     if (event.target == modal) {
         modal.style.display = "none";

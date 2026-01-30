@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | RMJ Groups</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Playfair+Display:wght@700&display=swap"
+        rel="stylesheet">
+    <style>
+        .about-hero {
+            min-height: 50vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 140px 5% 60px;
+            background: linear-gradient(135deg, rgba(10, 10, 10, 0.95), rgba(26, 26, 46, 0.9));
+        }
+
+        .team-section {
+            padding: 60px 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .team-section h2 {
+            text-align: center;
+            margin-bottom: 50px;
+            color: var(--gold);
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .team-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .team-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--gold);
+            box-shadow: 0 15px 40px rgba(212, 175, 55, 0.15);
+        }
+
+        .team-card.ceo {
+            grid-column: 1 / -1;
+            max-width: 400px;
+            margin: 0 auto 40px;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(10, 10, 10, 0.8));
+            border-color: var(--gold);
+        }
+
+        .team-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--gold), #f4d03f);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 2.5rem;
+            color: #000;
+        }
+
+        .team-card.ceo .team-avatar {
+            width: 150px;
+            height: 150px;
+            font-size: 3rem;
+        }
+
+        .team-card h3 {
+            color: white;
+            font-size: 1.3rem;
+            margin-bottom: 5px;
+        }
+
+        .team-card .role {
+            color: var(--gold);
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .section-divider {
+            text-align: center;
+            margin: 40px 0;
+            color: var(--gold);
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .section-divider::before,
+        .section-divider::after {
+            content: "—";
+            margin: 0 15px;
+            opacity: 0.5;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="navbar">
+        <a href="../index.html"><img src="../assets/images/rmj-main-logo.jpg" class="nav-logo-img"></a>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="digital-marketing.html">Digital</a></li>
+                <li><a href="sports-event.html">Sports & Event</a></li>
+                <li><a href="construction.html">Construction</a></li>
+                <li><a href="real-estate.html">Real Estate</a></li>
+                <li><a href="social-media.html">Social Media</a></li>
+                <li><a href="about-us.html" class="active" style="color:var(--gold)">About Us</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="about-hero">
+        <h1 class="gold-text" style="font-size: 3rem;">About <span style="color: white;">RMJ Groups</span></h1>
+        <p style="max-width: 700px; color: #ccc; margin-top: 20px; font-size: 1.1rem;">
+            Building Excellence, Creating Opportunities. We are a dynamic team dedicated to delivering exceptional
+            services across Digital Marketing, Sports Events, Construction, Real Estate, and Social Media.
+        </p>
+    </section>
+
+    <section class="team-section">
+        <h2>Meet Our Team</h2>
+
+        <!-- CEO -->
+        <div class="team-grid">
+            <div class="team-card ceo">
+                <div class="team-avatar">
+                    <i class="fa-solid fa-user-tie"></i>
+                </div>
+                <h3>ROHITH MJ</h3>
+                <p class="role">Chief Executive Officer</p>
+            </div>
+        </div>
+
+        <div class="section-divider">Leadership Team</div>
+
+        <div class="team-grid">
+            <div class="team-card">
+                <div class="team-avatar">
+                    <i class="fa-solid fa-chart-line"></i>
+                </div>
+                <h3>PRASHANTH</h3>
+                <p class="role">Chief Financial Officer</p>
+            </div>
+            <div class="team-card">
+                <div class="team-avatar">
+                    <i class="fa-solid fa-gears"></i>
+                </div>
+                <h3>ABHI NANDAN</h3>
+                <p class="role">Chief Operating Officer</p>
+            </div>
+            <div class="team-card">
+                <div class="team-avatar">
+                    <i class="fa-solid fa-microchip"></i>
+                </div>
+                <h3>PAVAN GOWDA</h3>
+                <p class="role">Chief Technology Officer</p>
+            </div>
+        </div>
+
+        <div class="section-divider">Web Development Team</div>
+
+        <div class="team-grid">
+            <div class="team-card">
+                <div class="team-avatar">
+                    <i class="fa-solid fa-code"></i>
+                </div>
+                <h3>G PAVAN KUMAR</h3>
+                <p class="role">Web Developer</p>
+            </div>
+            <div class="team-card">
+                <div class="team-avatar">
+                    <i class="fa-solid fa-laptop-code"></i>
+                </div>
+                <h3>SYED MOHAMMED NAQVI</h3>
+                <p class="role">Web Developer</p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="glass-footer">
+        <p>&copy; 2026 RMJ Groups. All Rights Reserved.</p>
+    </footer>
+
+    <script src="../assets/js/script.js"></script>
+</body>
+
+</html>

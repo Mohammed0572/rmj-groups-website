@@ -1,0 +1,62 @@
+[0129/195846.110:INFO:CONSOLE(0)] "Error with Permissions-Policy header: Feature xr-spatial-tracking's parameters are ignored.", source:  (0)
+[0129/195846.110:INFO:CONSOLE(0)] "Error with Permissions-Policy header: Origin trial controlled feature not enabled: 'attribution-reporting'.", source:  (0)
+[0129/195846.110:INFO:CONSOLE(0)] "Error with Permissions-Policy header: Unrecognized feature: 'compute-pressure'.", source:  (0)
+[0129/195846.110:INFO:CONSOLE(0)] "Error with Permissions-Policy header: Origin trial controlled feature not enabled: 'interest-cohort'.", source:  (0)
+[0129/195846.110:INFO:CONSOLE(0)] "Error with Permissions-Policy header: Unrecognized feature: 'private-state-token-issuance'.", source:  (0)
+[0129/195846.111:INFO:CONSOLE(0)] "Error with Permissions-Policy header: Origin trial controlled feature not enabled: 'shared-storage'.", source:  (0)
+[0129/195846.111:INFO:CONSOLE(0)] "Error with Permissions-Policy header: Unrecognized feature: 'shared-storage-select-url'.", source:  (0)
+[0129/195846.111:INFO:CONSOLE(0)] "Error with Permissions-Policy header: Unrecognized feature: 'private-state-token-redemption'.", source:  (0)
+[0129/195846.111:INFO:CONSOLE(0)] "Error with Permissions-Policy header: Unrecognized feature: 'unload'.", source:  (0)
+[0129/195846.111:INFO:CONSOLE(0)] "Error with Permissions-Policy header: Unrecognized feature: 'window-management'.", source:  (0)
+[0129/195846.111:INFO:CONSOLE(0)] "Document-Policy HTTP header: Unrecognized document policy feature name include-js-call-stacks-in-crash-reports.", source: https://web.whatsapp.com/ (0)
+[0129/195847.602:INFO:CONSOLE(77)] "ErrorUtils caught an error:
+
+[uim] Attempting to set multiple UIM tree roots. Expecting only one. Existing root: App, New root: App (multiple-uim-roots)
+
+Subsequent non-fatal errors won't be logged; see https://fburl.com/debugjs. [object Object]", source: https://static.whatsapp.net/rsrc.php/v4/yR/r/km9EMKmob43.js (77)
+[0129/195849.298:INFO:CONSOLE(113)] "Event handler of 'x-storagemutated-1' event must be added on the initial evaluation of worker script.", source: https://static.whatsapp.net/rsrc.php/v4/y6/r/jHBt3XaPXdZ.js (113)
+[0129/195905.557:ERROR:cache_util_win.cc(20)] Unable to move the cache: Access is denied. (0x5)
+[0129/195905.557:ERROR:disk_cache.cc(205)] Unable to create cache
+[0129/195905.557:ERROR:gpu_disk_cache.cc(673)] Gpu Cache Creation failed: -2
+[0129/195905.561:ERROR:cache_util_win.cc(20)] Unable to move the cache: Access is denied. (0x5)
+[0129/195905.561:ERROR:disk_cache.cc(205)] Unable to create cache
+[0129/195905.561:ERROR:gpu_disk_cache.cc(673)] Gpu Cache Creation failed: -2
+[0129/195907.572:ERROR:cache_util_win.cc(20)] Unable to move the cache: Access is denied. (0x5)
+[0129/195907.573:ERROR:disk_cache.cc(205)] Unable to create cache
+[0129/195907.973:ERROR:cache_util_win.cc(20)] Unable to move the cache: Access is denied. (0x5)
+[0129/195907.973:ERROR:disk_cache.cc(205)] Unable to create cache
+[0129/195907.973:ERROR:gpu_disk_cache.cc(673)] Gpu Cache Creation failed: -2
+[0129/195907.973:ERROR:cache_util_win.cc(20)] Unable to move the cache: Access is denied. (0x5)
+[0129/195907.973:ERROR:disk_cache.cc(205)] Unable to create cache
+[0129/195907.973:ERROR:gpu_disk_cache.cc(673)] Gpu Cache Creation failed: -2
+[0129/195908.038:INFO:CONSOLE(0)] "Error with Permissions-Policy header: Feature xr-spatial-tracking's parameters are ignored.", source:  (0)
+[0129/195908.038:INFO:CONSOLE(0)] "Error with Permissions-Policy header: Origin trial controlled feature not enabled: 'attribution-reporting'.", source:  (0)
+[0129/195908.038:INFO:CONSOLE(0)] "Error with Permissions-Policy header: Unrecognized feature: 'compute-pressure'.", source:  (0)
+[0129/195908.038:INFO:CONSOLE(0)] "Error with Permissions-Policy header: Origin trial controlled feature not enabled: 'interest-cohort'.", source:  (0)
+[0129/195908.038:INFO:CONSOLE(0)] "Error with Permissions-Policy header: Unrecognized feature: 'private-state-token-issuance'.", source:  (0)
+[0129/195908.038:INFO:CONSOLE(0)] "Error with Permissions-Policy header: Origin trial controlled feature not enabled: 'shared-storage'.", source:  (0)
+[0129/195908.038:INFO:CONSOLE(0)] "Error with Permissions-Policy header: Unrecognized feature: 'shared-storage-select-url'.", source:  (0)
+[0129/195908.038:INFO:CONSOLE(0)] "Error with Permissions-Policy header: Unrecognized feature: 'private-state-token-redemption'.", source:  (0)
+[0129/195908.038:INFO:CONSOLE(0)] "Error with Permissions-Policy header: Unrecognized feature: 'unload'.", source:  (0)
+[0129/195908.038:INFO:CONSOLE(0)] "Error with Permissions-Policy header: Unrecognized feature: 'window-management'.", source:  (0)
+[0129/195908.038:INFO:CONSOLE(0)] "Document-Policy HTTP header: Unrecognized document policy feature name include-js-call-stacks-in-crash-reports.", source: https://web.whatsapp.com/ (0)
+[0129/195908.573:ERROR:service_worker_storage.cc(1933)] Failed to delete the database: Database IO error
+[0129/195915.598:ERROR:quota_database.cc(929)] Could not open the quota database, resetting.
+[0129/195920.482:ERROR:quota_database.cc(929)] Could not open the quota database, resetting.
+[0129/195923.404:ERROR:quota_database.cc(931)] Failed to reset the quota database.
+[0129/195923.404:ERROR:quota_database.cc(931)] Failed to reset the quota database.
+[0129/195948.636:INFO:CONSOLE(113)] "Event handler of 'x-storagemutated-1' event must be added on the initial evaluation of worker script.", source: https://static.whatsapp.net/rsrc.php/v4/y6/r/jHBt3XaPXdZ.js (113)
+[0129/200101.278:INFO:CONSOLE(77)] "ErrorUtils caught an error:
+
+[page load] missing completion marker for wam after 90000ms (page-load-validation-missing-wam-incomplete-ws-timing)
+
+Subsequent non-fatal errors won't be logged; see https://fburl.com/debugjs. [object Object]", source: https://static.whatsapp.net/rsrc.php/v4/yR/r/km9EMKmob43.js (77)
+[0129/200134.117:INFO:CONSOLE(113)] "Event handler of 'x-storagemutated-1' event must be added on the initial evaluation of worker script.", source: https://static.whatsapp.net/rsrc.php/v4/y6/r/jHBt3XaPXdZ.js (113)
+[0129/200223.148:INFO:CONSOLE(113)] "Event handler of 'x-storagemutated-1' event must be added on the initial evaluation of worker script.", source: https://static.whatsapp.net/rsrc.php/v4/y6/r/jHBt3XaPXdZ.js (113)
+[0129/200348.766:INFO:CONSOLE(113)] "Event handler of 'x-storagemutated-1' event must be added on the initial evaluation of worker script.", source: https://static.whatsapp.net/rsrc.php/v4/y6/r/jHBt3XaPXdZ.js (113)
+[0129/200554.309:INFO:CONSOLE(113)] "Event handler of 'x-storagemutated-1' event must be added on the initial evaluation of worker script.", source: https://static.whatsapp.net/rsrc.php/v4/y6/r/jHBt3XaPXdZ.js (113)
+[0129/200925.752:INFO:CONSOLE(113)] "Event handler of 'x-storagemutated-1' event must be added on the initial evaluation of worker script.", source: https://static.whatsapp.net/rsrc.php/v4/y6/r/jHBt3XaPXdZ.js (113)
+[0129/201256.946:INFO:CONSOLE(113)] "Event handler of 'x-storagemutated-1' event must be added on the initial evaluation of worker script.", source: https://static.whatsapp.net/rsrc.php/v4/y6/r/jHBt3XaPXdZ.js (113)
+[0129/201627.975:INFO:CONSOLE(113)] "Event handler of 'x-storagemutated-1' event must be added on the initial evaluation of worker script.", source: https://static.whatsapp.net/rsrc.php/v4/y6/r/jHBt3XaPXdZ.js (113)
+[0129/201958.767:INFO:CONSOLE(113)] "Event handler of 'x-storagemutated-1' event must be added on the initial evaluation of worker script.", source: https://static.whatsapp.net/rsrc.php/v4/y6/r/jHBt3XaPXdZ.js (113)
+[0129/202329.973:INFO:CONSOLE(113)] "Event handler of 'x-storagemutated-1' event must be added on the initial evaluation of worker script.", source: https://static.whatsapp.net/rsrc.php/v4/y6/r/jHBt3XaPXdZ.js (113)
