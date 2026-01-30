@@ -2,7 +2,7 @@
    CONFIGURATION
    ========================================= */
 
-const BACKEND_URL = 'http://localhost:5000';
+const BACKEND_URL = 'https://rmj-backend-r2jv.onrender.com';
 
 // EmailJS Configuration
 const EMAILJS_CONFIG = {
