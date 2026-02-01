@@ -542,3 +542,105 @@ window.onclick = function (event) {
         modal.style.display = "none";
     }
 }
+
+/* =========================================
+   4. SCROLL-TRIGGERED ANIMATIONS (All Pages)
+   ========================================= */
+
+// Initialize scroll animations after page loads
+window.addEventListener('load', () => {
+    // Wait for intro animation to finish (matches the 800ms delay in intro)
+    setTimeout(initScrollAnimations, 1000);
+});
+
+function initScrollAnimations() {
+    // Select elements to animate on ALL pages
+    const elementsToAnimate = [
+        // Home page
+        '.hero-text',
+        '.hero-container h1',
+        '.hero-container p',
+        '.cards-wrapper .card',
+        // Common elements across all pages
+        '.content-section h1',
+        '.content-section h2',
+        '.content-section h3',
+        '.content-section p',
+        '.content-section ul',
+        // About page
+        '.about-hero',
+        '.about-hero h1',
+        '.about-hero p',
+        '.team-card',
+        '.team-grid',
+        '.section-divider',
+        '.team-section h2',
+        // Digital marketing page
+        '.benefit-card',
+        '.service-row',
+        '.service-text',
+        '.cta-box',
+        // Sports & Events page
+        '.event-card',
+        '.sport-card',
+        // Construction page
+        '.project-card',
+        '.floor-card',
+        '.column',
+        // Real Estate page
+        '.property-card',
+        '.listing-card',
+        // Social Media page
+        '.platform-card',
+        '.social-feature',
+        // Footer sections
+        '.footer-section',
+        '.glass-footer',
+        '.modern-footer'
+    ];
+
+    // Add scroll-animate class to all matching elements
+    elementsToAnimate.forEach(selector => {
+        document.querySelectorAll(selector).forEach(el => {
+            // Don't add to elements that already have it
+            if (!el.classList.contains('scroll-animate')) {
+                el.classList.add('scroll-animate');
+            }
+        });
+    });
+
+    // Create Intersection Observer for scroll animations
+    const observerOptions = {
+        root: null, // viewport
+        rootMargin: '0px 0px -50px 0px', // Trigger slightly before element enters
+        threshold: 0.1 // Trigger when 10% visible
+    };
+
+    const scrollObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                // Add animation class when element enters viewport
+                entry.target.classList.add('animate-in');
+                // Stop observing - element stays visible permanently
+                observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+
+    // Observe all scroll-animate elements
+    const animatedElements = document.querySelectorAll('.scroll-animate');
+    animatedElements.forEach(el => {
+        scrollObserver.observe(el);
+    });
+
+    // Manually trigger for elements already in viewport on load
+    setTimeout(() => {
+        animatedElements.forEach(el => {
+            const rect = el.getBoundingClientRect();
+            const windowHeight = window.innerHeight || document.documentElement.clientHeight;
+            if (rect.top < windowHeight && rect.bottom >= 0) {
+                el.classList.add('animate-in');
+            }
+        });
+    }, 100);
+}

@@ -526,6 +526,88 @@ ul {
     box-shadow: var(--shadow-sm);
 }
 
+/* =========================================
+   SCROLL-TRIGGERED ANIMATIONS
+   ========================================= */
+
+/* Base state for scroll-animated elements */
+.scroll-animate {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease-out,
+        transform 0.8s ease-out;
+}
+
+/* Animated state when element comes into view */
+.scroll-animate.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Hero text - ensure it has proper spacing */
+.hero-text {
+    margin-bottom: 20px;
+}
+
+/* Hero text animation - smaller movement to avoid overlap */
+.hero-text.scroll-animate {
+    transform: translateY(30px);
+}
+
+/* Card specific animations with staggered delays */
+.card.scroll-animate:nth-child(1) {
+    transition-delay: 0s;
+}
+
+.card.scroll-animate:nth-child(2) {
+    transition-delay: 0.15s;
+}
+
+.card.scroll-animate:nth-child(3) {
+    transition-delay: 0.3s;
+}
+
+.card.scroll-animate:nth-child(4) {
+    transition-delay: 0.45s;
+}
+
+.card.scroll-animate:nth-child(5) {
+    transition-delay: 0.6s;
+}
+
+/* Slide from left animation variant */
+.scroll-animate.slide-left {
+    opacity: 0;
+    transform: translateX(-60px);
+}
+
+.scroll-animate.slide-left.animate-in {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Slide from right animation variant */
+.scroll-animate.slide-right {
+    opacity: 0;
+    transform: translateX(60px);
+}
+
+.scroll-animate.slide-right.animate-in {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Scale up animation variant */
+.scroll-animate.scale-up {
+    opacity: 0;
+    transform: scale(0.8);
+}
+
+.scroll-animate.scale-up.animate-in {
+    opacity: 1;
+    transform: scale(1);
+}
+
 .card:hover {
     transform: translateY(-8px) scale(1.02);
     border-color: var(--gold);
@@ -811,10 +893,13 @@ input {
 }
 
 @keyframes pulse-lock {
-    0%, 100% {
+
+    0%,
+    100% {
         opacity: 1;
         transform: scale(1);
     }
+
     50% {
         opacity: 0.7;
         transform: scale(1.1);
