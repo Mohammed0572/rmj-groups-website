@@ -15,6 +15,16 @@ const EMAILJS_CONFIG = {
 // Local OTP storage (for verification)
 let localOtpStore = {};
 
+// Helper: fetch with timeout (Render free tier can take 30s+ to wake up)
+function fetchWithTimeout(url, options, timeoutMs = 30000) {
+    return Promise.race([
+        fetch(url, options),
+        new Promise((_, reject) =>
+            setTimeout(() => reject(new Error('SERVER_TIMEOUT')), timeoutMs)
+        )
+    ]);
+}
+
 /* =========================================
    1. UI LOGIC (NAVBAR & SPLASH SCREEN)
    ========================================= */
@@ -269,7 +279,7 @@ async function handleAuth(event) {
     event.preventDefault();
     const btn = document.getElementById('submitBtn');
     const originalText = btn.innerText;
-    btn.innerText = "Processing...";
+    btn.innerText = "Connecting to server...";
 
     const email = document.getElementById('userEmail').value.trim();
     const password = document.getElementById('userPassword')?.value || '';
@@ -278,7 +288,8 @@ async function handleAuth(event) {
     try {
         if (authMode === 'login') {
             // Login with email + password (using backend)
-            const response = await fetch(`${BACKEND_URL}/api/login`, {
+            btn.innerText = "Logging in...";
+            const response = await fetchWithTimeout(`${BACKEND_URL}/api/login`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email, password })
@@ -336,7 +347,8 @@ async function handleAuth(event) {
                 return;
             }
 
-            const response = await fetch(`${BACKEND_URL}/api/signup-email`, {
+            btn.innerText = "Creating account...";
+            const response = await fetchWithTimeout(`${BACKEND_URL}/api/signup-email`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ name, email, password, otp })
@@ -395,7 +407,8 @@ async function handleAuth(event) {
                 return;
             }
 
-            const response = await fetch(`${BACKEND_URL}/api/reset-password-email`, {
+            btn.innerText = "Resetting password...";
+            const response = await fetchWithTimeout(`${BACKEND_URL}/api/reset-password-email`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email, otp, newPassword })
@@ -415,7 +428,11 @@ async function handleAuth(event) {
             btn.innerText = originalText;
         }
     } catch (err) {
-        alert("Connection Error. Make sure the backend server is running.");
+        if (err.message === 'SERVER_TIMEOUT') {
+            alert("⏳ Server is waking up (free hosting). Please try again in 30 seconds.");
+        } else {
+            alert("❌ Connection Error. The server may be temporarily unavailable. Please try again.");
+        }
         btn.innerText = originalText;
     }
 }
