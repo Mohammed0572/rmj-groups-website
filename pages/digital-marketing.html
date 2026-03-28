@@ -5,94 +5,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Digital Marketing | RMJ Groups</title>
-
+    <meta name="description" content="RMJ Digital Marketing — SEO, social media, email campaigns, content marketing, and PPC advertising solutions.">
     <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Playfair+Display:wght@700&display=swap"
-        rel="stylesheet">
-
-
-
-    <style>
-        .benefit-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-top: 30px;
-        }
-
-        .benefit-card {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 20px;
-            border-radius: 10px;
-            text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .benefit-card i {
-            font-size: 2rem;
-            color: var(--gold);
-            margin-bottom: 15px;
-        }
-
-        .service-row {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 30px;
-            margin-top: 50px;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .service-text {
-            flex: 1;
-            min-width: 300px;
-            text-align: left;
-        }
-
-        .service-text h3 {
-            color: var(--gold);
-            font-size: 1.5rem;
-            margin-bottom: 10px;
-        }
-
-        .service-text ul {
-            list-style: none;
-            padding-left: 0;
-        }
-
-        .service-text li {
-            margin-bottom: 8px;
-            position: relative;
-            padding-left: 20px;
-        }
-
-        .service-text li::before {
-            content: "•";
-            color: var(--gold);
-            position: absolute;
-            left: 0;
-        }
-
-        .cta-box {
-            background: linear-gradient(45deg, rgba(10, 25, 47, 0.9), rgba(212, 175, 55, 0.2));
-            padding: 40px;
-            margin-top: 60px;
-            border-radius: 15px;
-            border: 1px solid var(--gold);
-        }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/jpeg" href="../assets/images/rmj-main-logo.jpg">
 </head>
 
 <body>
 
+    <div class="toast-container" id="toastContainer"></div>
+
     <header class="navbar">
-        <a href="../index.html"><img src="../assets/images/rmj-main-logo.jpg" class="nav-logo-img"></a>
+        <a href="../index.html"><img src="../assets/images/rmj-main-logo.jpg" class="nav-logo-img" alt="RMJ Logo"></a>
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation">
+            <span></span><span></span><span></span>
+        </button>
         <nav>
-            <ul class="nav-links">
+            <ul class="nav-links" id="navLinks">
                 <li><a href="../index.html">Home</a></li>
-                <li><a href="digital-marketing.html" class="active" style="color:var(--gold)">Digital</a></li>
+                <li><a href="digital-marketing.html" class="active">Digital</a></li>
                 <li><a href="sports-event.html">Sports & Event</a></li>
                 <li><a href="construction.html">Construction</a></li>
                 <li><a href="real-estate.html">Real Estate</a></li>
@@ -102,19 +35,20 @@
         </nav>
     </header>
 
-    <div class="hero-container" style="min-height: 60vh; padding-top: 140px;">
-        <h1 class="gold-text">RMJ Digital Marketing</h1>
-        <p style="max-width: 700px; margin: 20px auto; color: #ccc;">
-            The utilization of digital technology to promote products or services. We encompass online channels such as
-            websites, social media, search engines, email, and mobile applications.
+    <div class="hero-container" style="min-height: 60vh;">
+        <span class="section-label">RMJ Digital Solutions</span>
+        <h1 class="gold-text" style="font-size: clamp(2rem, 5vw, 3rem);">Digital Marketing</h1>
+        <p style="max-width: 600px; margin: 16px auto 0; color: var(--text-secondary); font-size: 1.05rem;">
+            Utilizing digital technology to promote products and services — through websites, social media, search engines, email, and mobile applications.
         </p>
-        <p style="font-size: 0.9rem; color: var(--gold);">
+        <p style="font-size: 0.88rem; color: var(--gold); margin-top: 12px; font-style: italic;">
             "Increasingly significant in today's business landscape."
         </p>
     </div>
 
-    <section class="content-section" style="padding: 50px 5%; text-align: center;">
-        <h2>Advantages of Digital Marketing</h2>
+    <section class="content-section section--alt" style="text-align: center;">
+        <span class="section-label">Benefits</span>
+        <h2 class="section-title">Advantages of Digital Marketing</h2>
         <div class="benefit-grid">
             <div class="benefit-card">
                 <i class="fa-solid fa-earth-americas"></i>
@@ -144,8 +78,11 @@
         </div>
     </section>
 
-    <section class="content-section" style="background: rgba(255,255,255,0.02); padding: 50px 5%;">
-        <h2 style="text-align: center; margin-bottom: 40px;">Core Digital Strategies</h2>
+    <section class="content-section">
+        <div class="text-center">
+            <span class="section-label">Our Expertise</span>
+            <h2 class="section-title" style="margin-bottom: var(--space-xl);">Core Digital Strategies</h2>
+        </div>
 
         <div class="service-row">
             <div class="service-text">
@@ -168,7 +105,7 @@
             </div>
         </div>
 
-        <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 40px 0;">
+        <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.05); margin: 40px 0;">
 
         <div class="service-row">
             <div class="service-text">
@@ -191,7 +128,7 @@
             </div>
         </div>
 
-        <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 40px 0;">
+        <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.05); margin: 40px 0;">
 
         <div class="service-row" style="justify-content: center;">
             <div class="service-text" style="text-align: center; max-width: 600px;">
@@ -205,23 +142,52 @@
             </div>
         </div>
     </section>
-    <section class="content-section" style="padding: 0 5% 50px; text-align: center;">
+
+    <section class="content-section section--alt" style="text-align: center;">
         <div class="cta-box">
             <h2>Start Your Digital Journey</h2>
-            <p style="margin: 20px 0; color: #ddd;">
+            <p style="margin: 16px 0 24px; color: var(--text-secondary);">
                 Digital marketing is significant for businesses in today's digital age.
                 Stay competitive by implementing these strategies today.
             </p>
-
             <button class="cta-button" style="max-width: 250px; margin: 0 auto;"
                 onclick="window.open('https://wa.me/917338445987', '_blank')">
-                <i class="fa-brands fa-whatsapp" style="margin-right: 8px;"></i> Chat on WhatsApp
+                <i class="fa-brands fa-whatsapp"></i> Chat on WhatsApp
             </button>
         </div>
     </section>
 
-    <footer class="glass-footer">
-        <p>&copy; 2026 RMJ Groups. All Rights Reserved.</p>
+    <footer class="modern-footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3 class="gold-text">RMJ Groups</h3>
+                <p>Your trusted partner across Digital Marketing, Sports Events, Construction, Real Estate, and Social Media.</p>
+                <div class="social-links">
+                    <a href="https://wa.me/917338445987" target="_blank" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+                    <a href="https://www.instagram.com/rmjgroups_official" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" title="Facebook"><i class="fa-brands fa-facebook"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="digital-marketing.html">Digital Marketing</a></li>
+                    <li><a href="sports-event.html">Sports & Events</a></li>
+                    <li><a href="construction.html">Construction</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Contact Us</h4>
+                <p>📧 rohithmj@rmjgroups.in</p>
+                <p>📱 +91 733 844 5987</p>
+                <p>📍 Bengaluru, Karnataka</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 RMJ Groups. All Rights Reserved.</p>
+            <p class="footer-tagline">Building Excellence, Creating Opportunities</p>
+        </div>
     </footer>
 
     <script src="../assets/js/script.js"></script>

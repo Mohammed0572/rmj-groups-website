@@ -5,42 +5,48 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Real Estate | RMJ Groups</title>
+    <meta name="description" content="RMJ Groups Real Estate — premium properties and investment opportunities in Bengaluru.">
     <link rel="stylesheet" href="../assets/css/style.css">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Playfair+Display:wght@700&display=swap"
-        rel="stylesheet">
-
-
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/jpeg" href="../assets/images/rmj-main-logo.jpg">
 </head>
 
 <body>
+
+    <div class="toast-container" id="toastContainer"></div>
+
     <header class="navbar">
-        <a href="../index.html"><img src="../assets/images/rmj-main-logo.jpg" class="nav-logo-img"></a>
+        <a href="../index.html"><img src="../assets/images/rmj-main-logo.jpg" class="nav-logo-img" alt="RMJ Logo"></a>
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation">
+            <span></span><span></span><span></span>
+        </button>
         <nav>
-            <ul class="nav-links">
+            <ul class="nav-links" id="navLinks">
                 <li><a href="../index.html">Home</a></li>
                 <li><a href="digital-marketing.html">Digital</a></li>
                 <li><a href="sports-event.html">Sports & Event</a></li>
                 <li><a href="construction.html">Construction</a></li>
-                <li><a href="real-estate.html" class="active" style="color:var(--gold)">Real Estate</a></li>
+                <li><a href="real-estate.html" class="active">Real Estate</a></li>
                 <li><a href="social-media.html">Social Media</a></li>
                 <li><a href="about-us.html">About Us</a></li>
             </ul>
         </nav>
     </header>
 
-    <div class="hero-container" style="min-height: 50vh; padding-top: 120px;">
-        <h1 class="gold-text">Premium Properties</h1>
-        <p>Find your next home or investment in Bengaluru.</p>
+    <div class="hero-container" style="min-height: 50vh;">
+        <span class="section-label">RMJ Real Estate</span>
+        <h1 class="gold-text" style="font-size: clamp(2rem, 5vw, 3rem);">Premium Properties</h1>
+        <p style="color: var(--text-secondary); margin-top: 12px; font-size: 1.05rem;">Find your next home or investment in Bengaluru.</p>
     </div>
 
-    <section class="content-section" style="padding: 0 5% 50px;">
-        <div class="cards-wrapper" style="height: auto; flex-wrap: wrap;">
+    <section class="content-section">
+        <div class="cards-wrapper" style="grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));">
 
-            <div class="card" style="flex: 1 1 300px; height: 400px;">
+            <div class="card" style="height: 400px;">
                 <div class="card-bg-color"
-                    style="background: url('https://images.unsplash.com/photo-1600596542815-3ad19fb2a258?auto=format&fit=crop&w=800') center/cover;">
-                </div>
+                    style="background: url('https://images.unsplash.com/photo-1600596542815-3ad19fb2a258?auto=format&fit=crop&w=800') center/cover;"></div>
                 <div class="card-content">
                     <h3>Whitefield Luxury</h3>
                     <p>3BHK Apartment • ₹1.2 Cr</p>
@@ -48,10 +54,9 @@
                 </div>
             </div>
 
-            <div class="card" style="flex: 1 1 300px; height: 400px;">
+            <div class="card" style="height: 400px;">
                 <div class="card-bg-color"
-                    style="background: url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800') center/cover;">
-                </div>
+                    style="background: url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800') center/cover;"></div>
                 <div class="card-content">
                     <h3>Indiranagar Villa</h3>
                     <p>4BHK Independent • ₹4.5 Cr</p>
@@ -59,10 +64,9 @@
                 </div>
             </div>
 
-            <div class="card" style="flex: 1 1 300px; height: 400px;">
+            <div class="card" style="height: 400px;">
                 <div class="card-bg-color"
-                    style="background: url('https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=800') center/cover;">
-                </div>
+                    style="background: url('https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=800') center/cover;"></div>
                 <div class="card-content">
                     <h3>Hebbal High-Rise</h3>
                     <p>2BHK Smart Home • ₹85 L</p>
@@ -73,8 +77,37 @@
         </div>
     </section>
 
-    <footer class="glass-footer">
-        <p>&copy; 2026 RMJ Groups. All Rights Reserved.</p>
+    <footer class="modern-footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3 class="gold-text">RMJ Groups</h3>
+                <p>Your trusted partner across Digital Marketing, Sports Events, Construction, Real Estate, and Social Media.</p>
+                <div class="social-links">
+                    <a href="https://wa.me/917338445987" target="_blank" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+                    <a href="https://www.instagram.com/rmjgroups_official" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" title="Facebook"><i class="fa-brands fa-facebook"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="digital-marketing.html">Digital Marketing</a></li>
+                    <li><a href="sports-event.html">Sports & Events</a></li>
+                    <li><a href="construction.html">Construction</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Contact Us</h4>
+                <p>📧 rohithmj@rmjgroups.in</p>
+                <p>📱 +91 733 844 5987</p>
+                <p>📍 Bengaluru, Karnataka</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 RMJ Groups. All Rights Reserved.</p>
+            <p class="footer-tagline">Building Excellence, Creating Opportunities</p>
+        </div>
     </footer>
 
     <script src="../assets/js/script.js"></script>

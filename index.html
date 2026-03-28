@@ -4,27 +4,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RMJ Groups | Global Excellence</title>
+    <title>RMJ Groups | Global Excellence in Business</title>
+    <meta name="description" content="RMJ Groups — Excellence in Digital Marketing, Sports & Events, Construction, Real Estate, and Social Media solutions across Bengaluru.">
     <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Playfair+Display:wght@700&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/jpeg" href="assets/images/rmj-main-logo.jpg">
 </head>
 
 <body>
 
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Server Connecting Banner -->
+    <div class="server-banner" id="serverBanner">⏳ Connecting to server — please wait a moment...</div>
+
+    <!-- Loading Screen -->
     <div class="intro-overlay" id="intro">
         <h1 class="logo-big">RMJ <span class="gold-text">GROUPS</span></h1>
         <div class="loading-bar"></div>
     </div>
 
-    <header class="navbar">
+    <!-- Navbar -->
+    <header class="navbar" id="mainNavbar">
         <a href="#" class="logo-link">
             <img src="assets/images/rmj-main-logo.jpg" alt="RMJ Logo" class="nav-logo-img">
         </a>
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
         <nav>
-            <ul class="nav-links">
+            <ul class="nav-links" id="navLinks">
                 <li><a href="#" class="active">Home</a></li>
                 <li><a href="#" onclick="checkLogin('pages/digital-marketing.html'); return false;">Digital</a></li>
                 <li><a href="#" onclick="checkLogin('pages/sports-event.html'); return false;">Sports & Event</a></li>
@@ -32,21 +46,38 @@
                 <li><a href="#" onclick="checkLogin('pages/real-estate.html'); return false;">Real Estate</a></li>
                 <li><a href="#" onclick="checkLogin('pages/social-media.html'); return false;">Social Media</a></li>
                 <li><a href="pages/about-us.html">About Us</a></li>
-
                 <li id="nav-login-btn" style="display:block;">
                     <a href="#" onclick="openLoginModal()" style="color:var(--gold);">Login</a>
                 </li>
                 <li id="nav-logout-btn" style="display:none;">
-                    <a href="#" onclick="logout()" style="color: red;">Logout</a>
+                    <a href="#" onclick="logout()" style="color: #f87171;">Logout</a>
                 </li>
             </ul>
         </nav>
     </header>
 
+    <!-- ============ HERO SECTION ============ -->
     <main class="hero-container">
         <div class="hero-text">
-            <h2>Grand Vision, Global Reach</h2>
-            <p>Excellence in Construction, Digital Innovation, and Real Estate.</p>
+            <span class="section-label">Welcome to RMJ Groups</span>
+            <h2>Grand Vision,<br><span class="gold-text">Global Reach</span></h2>
+            <p>Excellence in Construction, Digital Innovation, Real Estate, Sports Events & Social Media.</p>
+            <a href="#services" class="hero-cta">
+                Explore Our Services <i class="fa-solid fa-arrow-right"></i>
+            </a>
+        </div>
+        <div class="scroll-indicator">
+            <span>Scroll</span>
+            <i class="fa-solid fa-chevron-down"></i>
+        </div>
+    </main>
+
+    <!-- ============ SERVICES ============ -->
+    <section class="section section--alt" id="services">
+        <div class="text-center">
+            <span class="section-label">What We Do</span>
+            <h2 class="section-title">Our Services</h2>
+            <p class="section-subtitle">A diversified portfolio of businesses built on trust, innovation, and excellence.</p>
         </div>
 
         <div class="cards-wrapper">
@@ -61,8 +92,7 @@
 
             <!-- 2. Sports & Event -->
             <div class="card locked-card" data-destination="pages/sports-event.html">
-                <div class="card-bg-color" style="background: url('assets/images/sports-event-bg.jpg') center/cover;">
-                </div>
+                <div class="card-bg-color" style="background: url('assets/images/sports-event-bg.jpg') center/cover;"></div>
                 <div class="card-content">
                     <h3>Sports & Event</h3>
                     <p>Management</p>
@@ -71,8 +101,7 @@
 
             <!-- 3. Construction -->
             <div class="card locked-card" data-destination="pages/construction.html">
-                <div class="card-bg-color" style="background: url('assets/images/construction-bg.jpg') center/cover;">
-                </div>
+                <div class="card-bg-color" style="background: url('assets/images/construction-bg.jpg') center/cover;"></div>
                 <div class="card-content">
                     <h3>RMJ Construction</h3>
                     <p>Development</p>
@@ -81,8 +110,7 @@
 
             <!-- 4. Real Estate -->
             <div class="card locked-card" data-destination="pages/real-estate.html">
-                <div class="card-bg-color" style="background: url('assets/images/realestate-bg.jpg') center/cover;">
-                </div>
+                <div class="card-bg-color" style="background: url('assets/images/realestate-bg.jpg') center/cover;"></div>
                 <div class="card-content">
                     <h3>Real Estate</h3>
                     <p>Properties</p>
@@ -91,52 +119,82 @@
 
             <!-- 5. Social Media -->
             <div class="card locked-card" data-destination="pages/social-media.html">
-                <div class="card-bg-color" style="background: url('assets/images/social-bg.png') center/cover;">
-                </div>
+                <div class="card-bg-color" style="background: url('assets/images/social-bg.png') center/cover;"></div>
                 <div class="card-content">
                     <h3>Social Media</h3>
                     <p>Branding & Growth</p>
                 </div>
             </div>
         </div>
-    </main>
+    </section>
 
-    <!-- Event Announcement Popup -->
-    <div id="eventPopup" class="event-popup-overlay"
-        style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 9999; justify-content: center; align-items: center; padding: 20px; box-sizing: border-box;">
-        <div class="event-popup-content"
-            style="max-width: 420px; width: 100%; max-height: 90vh; overflow-y: auto; padding: 0; border-radius: 15px; position: relative; background: #0a0a0a;">
-            <span class="event-close" onclick="closeEventPopup()"
-                style="position: absolute; right: 15px; top: 10px; font-size: 28px; color: white; cursor: pointer; z-index: 10; text-shadow: 0 0 5px rgba(0,0,0,0.5);">&times;</span>
-            <img src="assets/images/badminton-tournament-poster.jpg" alt="Badminton Tournament Poster"
-                style="width: 100%; max-height: 280px; object-fit: cover; display: block;">
-            <div style="padding: 20px; background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);">
-                <div class="event-details" style="text-align: left; margin-bottom: 15px;">
-                    <p style="margin: 6px 0; color: #ffffff; font-size: 14px;"><strong style="color: #d4af37;">📅
-                            Date:</strong> 28th February 2026</p>
-                    <p style="margin: 6px 0; color: #ffffff; font-size: 14px;"><strong style="color: #d4af37;">🏆
-                            Prizes:</strong> ₹10,000</p>
-                    <p style="margin: 6px 0; color: #ffffff; font-size: 14px;"><strong style="color: #d4af37;">⏰
-                            Deadline:</strong> 26th Feb 2026</p>
-                    <p style="margin: 6px 0; color: #ffffff; font-size: 14px;"><strong style="color: #d4af37;">📍
-                            Venue:</strong> Machaxi PlayMax Sports</p>
-                    <p style="margin: 6px 0; color: #ffffff; font-size: 14px;"><strong style="color: #d4af37;">📞
-                            Contact:</strong> 7338445987</p>
-                </div>
-                <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
-                    <a href="https://konfhub.com/badminton-tournament" target="_blank" class="event-btn"
-                        style="background: linear-gradient(135deg, #d4af37 0%, #f4d03f 100%); color: #000; font-weight: 700; padding: 12px 25px; border-radius: 25px; text-decoration: none; display: inline-block; font-size: 14px;">🏸
-                        Register Now</a>
-                    <a href="badminton-rules.pdf" download="Badminton-Tournament-Rules.pdf" class="event-btn"
-                        style="background: rgba(212,175,55,0.15); border: 2px solid var(--gold); color: var(--gold); font-weight: 600; padding: 12px 20px; border-radius: 25px; text-decoration: none; display: inline-block; font-size: 14px; cursor: pointer;">📜
-                        Rules</a>
-                    <button onclick="closeEventPopup()" class="event-btn"
-                        style="background: transparent; border: 2px solid var(--gold); color: var(--gold); padding: 12px 20px; border-radius: 25px; cursor: pointer; font-size: 14px;">Close</button>
-                </div>
+    <!-- ============ STATS ============ -->
+    <section class="section">
+        <div class="stats-bar">
+            <div class="stat-item">
+                <h3>100+</h3>
+                <p>Homes Built</p>
+            </div>
+            <div class="stat-item">
+                <h3>500+</h3>
+                <p>Events Managed</p>
+            </div>
+            <div class="stat-item">
+                <h3>200+</h3>
+                <p>Clients Served</p>
+            </div>
+            <div class="stat-item">
+                <h3>98%</h3>
+                <p>Satisfaction Rate</p>
             </div>
         </div>
-    </div>
+    </section>
 
+    <!-- ============ WHY US ============ -->
+    <section class="section section--alt">
+        <div class="text-center">
+            <span class="section-label">Why Choose Us</span>
+            <h2 class="section-title">Built on Trust & Excellence</h2>
+            <p class="section-subtitle">Three pillars that define every project we deliver.</p>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fa-solid fa-award"></i></div>
+                <h3>Proven Experience</h3>
+                <p>Years of expertise across construction, digital marketing, real estate, and event management — delivering results that matter.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fa-solid fa-lightbulb"></i></div>
+                <h3>Innovation First</h3>
+                <p>We leverage technology and modern strategies to bring creative, efficient solutions to every business challenge.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fa-solid fa-handshake"></i></div>
+                <h3>Client-Centric</h3>
+                <p>Transparent communication, on-time delivery, and personalized service — because your success is our reputation.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ CTA ============ -->
+    <section class="cta-section">
+        <span class="section-label">Get Started</span>
+        <h2 class="section-title">Ready to Build<br>Your <span class="gold-text">Vision</span>?</h2>
+        <p class="section-subtitle">Let's discuss your next project. Reach out to us today.</p>
+        <div class="cta-buttons">
+            <a href="https://wa.me/917338445987" target="_blank" class="cta-button">
+                <i class="fa-brands fa-whatsapp"></i> Chat on WhatsApp
+            </a>
+            <a href="mailto:rohithmj@rmjgroups.in" class="cta-button cta-button--outline">
+                <i class="fa-regular fa-envelope"></i> Email Us
+            </a>
+        </div>
+    </section>
+
+
+
+    <!-- ============ LOGIN MODAL ============ -->
     <div id="loginModal" class="modal-overlay">
         <div class="modal-content">
             <span class="close-modal" onclick="closeLogin()">&times;</span>
@@ -145,7 +203,6 @@
             <p id="modalSubtitle">Welcome back to RMJ Groups</p>
 
             <form id="authForm" onsubmit="handleAuth(event)">
-
                 <!-- Name (Signup only) -->
                 <div id="signupFields" style="display:none;">
                     <div class="input-group">
@@ -160,8 +217,8 @@
 
                 <!-- Send OTP Button (Signup & Forgot only) -->
                 <div id="otpBtnGroup" style="display:none; margin-bottom: 15px;">
-                    <button type="button" id="otpBtn" onclick="sendEmailOTP()" class="cta-button"
-                        style="background: transparent; border: 2px solid var(--gold); color: var(--gold);">
+                    <button type="button" id="otpBtn" onclick="sendEmailOTP()" class="cta-button cta-button--outline"
+                        style="width:100%;">
                         📧 Send OTP to Email
                     </button>
                 </div>
@@ -182,26 +239,40 @@
                     <input type="password" id="newPassword" placeholder="New Password">
                 </div>
 
-                <button type="submit" id="submitBtn" class="cta-button">Login</button>
+                <button type="submit" id="submitBtn" class="cta-button" style="width:100%;">Login</button>
             </form>
 
             <div style="margin-top:20px; font-size:0.8rem; display:flex; justify-content:space-between;">
-                <a href="#" id="forgotLink" onclick="toggleForgotMode()" style="color:#ccc;">Forgot Password?</a>
+                <a href="#" id="forgotLink" onclick="toggleForgotMode()" style="color:var(--text-muted);">Forgot Password?</a>
                 <span>
                     <span id="toggleText">New here? </span>
-                    <a href="#" onclick="toggleAuthMode()" style="color:var(--gold); font-weight:bold;">Create
+                    <a href="#" onclick="toggleAuthMode()" style="color:var(--gold); font-weight:600;">Create
                         Account</a>
                 </span>
             </div>
         </div>
     </div>
 
+    <!-- ============ FOOTER ============ -->
     <footer class="modern-footer">
         <div class="footer-content">
             <div class="footer-section">
                 <h3 class="gold-text">RMJ Groups</h3>
-                <p>Your trusted partner for Digital Marketing, Sports Events, Construction, Real Estate, and Social
-                    Media solutions.</p>
+                <p>Your trusted partner for Digital Marketing, Sports Events, Construction, Real Estate, and Social Media solutions.</p>
+                <div class="social-links">
+                    <a href="https://wa.me/917338445987" target="_blank" title="WhatsApp">
+                        <i class="fa-brands fa-whatsapp"></i>
+                    </a>
+                    <a href="https://www.instagram.com/rmjgroups_official" target="_blank" title="Instagram">
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
+                    <a href="#" target="_blank" title="Facebook">
+                        <i class="fa-brands fa-facebook"></i>
+                    </a>
+                    <a href="#" target="_blank" title="LinkedIn">
+                        <i class="fa-brands fa-linkedin-in"></i>
+                    </a>
+                </div>
             </div>
             <div class="footer-section">
                 <h4>Quick Links</h4>
@@ -216,17 +287,7 @@
                 <h4>Contact Us</h4>
                 <p>📧 rohithmj@rmjgroups.in</p>
                 <p>📱 +91 733 844 5987</p>
-                <div class="social-links">
-                    <a href="https://wa.me/917338445987" target="_blank" title="WhatsApp">
-                        <i class="fa-brands fa-whatsapp"></i>
-                    </a>
-                    <a href="#" target="_blank" title="Facebook">
-                        <i class="fa-brands fa-facebook"></i>
-                    </a>
-                    <a href="#" target="_blank" title="Instagram">
-                        <i class="fa-brands fa-instagram"></i>
-                    </a>
-                </div>
+                <p>📍 Bengaluru, Karnataka</p>
             </div>
         </div>
         <div class="footer-bottom">
@@ -235,8 +296,8 @@
         </div>
     </footer>
 
-    <a href="https://wa.me/917338445987" class="float-whatsapp" target="_blank"
-        style="position:fixed; bottom:30px; right:30px; background:#25d366; color:white; width:60px; height:60px; border-radius:50%; display:flex; justify-content:center; align-items:center; font-size:30px; z-index:2000; text-decoration:none;">
+    <!-- WhatsApp Float -->
+    <a href="https://wa.me/917338445987" class="float-whatsapp" target="_blank">
         <i class="fa-brands fa-whatsapp"></i>
     </a>
 

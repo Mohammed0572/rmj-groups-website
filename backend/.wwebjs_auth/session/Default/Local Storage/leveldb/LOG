@@ -1,5 +1,0 @@
-2025/12/28-22:43:41.423 5b98 Creating DB C:\Users\moham\Desktop\RMJ Groups\backend\.wwebjs_auth\session\Default\Local Storage\leveldb since it was missing.
-2025/12/28-22:43:41.430 5b98 Reusing MANIFEST C:\Users\moham\Desktop\RMJ Groups\backend\.wwebjs_auth\session\Default\Local Storage\leveldb/MANIFEST-000001
-2025/12/28-22:43:41.431 5b98 Recovering log #4
-2025/12/28-22:43:41.432 5b98 Reusing old log C:\Users\moham\Desktop\RMJ Groups\backend\.wwebjs_auth\session\Default\Local Storage\leveldb/000004.log 
-2025/12/28-22:43:41.433 5b98 Delete type=2 #3

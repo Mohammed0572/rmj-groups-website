@@ -15,15 +15,86 @@ const EMAILJS_CONFIG = {
 // Local OTP storage (for verification)
 let localOtpStore = {};
 
-// Helper: fetch with timeout (Render free tier can take 30s+ to wake up)
-function fetchWithTimeout(url, options, timeoutMs = 30000) {
-    return Promise.race([
-        fetch(url, options),
-        new Promise((_, reject) =>
-            setTimeout(() => reject(new Error('SERVER_TIMEOUT')), timeoutMs)
-        )
-    ]);
+// Helper: fetch with retry and timeout (Render free tier can take 30s+ to wake up)
+async function fetchWithRetry(url, options, retries = 3, timeoutMs = 35000) {
+    for (let i = 0; i < retries; i++) {
+        try {
+            const response = await Promise.race([
+                fetch(url, options),
+                new Promise((_, reject) => setTimeout(() => reject(new Error('SERVER_TIMEOUT')), timeoutMs))
+            ]);
+            if (!response.ok && response.status >= 500) throw new Error("Server Error");
+            return response;
+        } catch (error) {
+            if (i === retries - 1) throw error;
+            console.warn(`Retrying request... (${i + 1}/${retries})`);
+            await new Promise(res => setTimeout(res, 1500 * (i + 1))); // Incremental backoff
+        }
+    }
 }
+
+/* =========================================
+   TOAST NOTIFICATION SYSTEM
+   ========================================= */
+
+function showToast(message, type = 'info', duration = 4000) {
+    let container = document.getElementById('toastContainer');
+    if (!container) {
+        container = document.createElement('div');
+        container.className = 'toast-container';
+        container.id = 'toastContainer';
+        document.body.appendChild(container);
+    }
+
+    const toast = document.createElement('div');
+    toast.className = `toast toast--${type}`;
+
+    const icons = {
+        success: '✅',
+        error: '❌',
+        info: 'ℹ️'
+    };
+
+    toast.innerHTML = `<span>${icons[type] || 'ℹ️'}</span><span>${message}</span>`;
+    container.appendChild(toast);
+
+    setTimeout(() => {
+        toast.classList.add('toast--hiding');
+        setTimeout(() => toast.remove(), 300);
+    }, duration);
+}
+
+/* =========================================
+   HAMBURGER MENU
+   ========================================= */
+
+document.addEventListener('DOMContentLoaded', () => {
+    const menuToggle = document.getElementById('menuToggle');
+    const navLinks = document.getElementById('navLinks');
+
+    if (menuToggle && navLinks) {
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('nav-open');
+            menuToggle.classList.toggle('active');
+        });
+
+        // Close menu when clicking a nav link
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('nav-open');
+                menuToggle.classList.remove('active');
+            });
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!menuToggle.contains(e.target) && !navLinks.contains(e.target)) {
+                navLinks.classList.remove('nav-open');
+                menuToggle.classList.remove('active');
+            }
+        });
+    }
+});
 
 /* =========================================
    1. UI LOGIC (NAVBAR & SPLASH SCREEN)
@@ -34,13 +105,14 @@ window.addEventListener('load', () => {
     const intro = document.getElementById('intro');
     if (intro) {
         setTimeout(() => {
+            intro.style.opacity = '0';
             intro.style.transform = 'translateY(-100%)';
 
-            // Show event popup after loading screen
+            // Remove from DOM after animation
             setTimeout(() => {
-                showEventPopup();
-            }, 500);
-        }, 800); // Reduced from 2500ms to 800ms for faster loading
+                intro.style.display = 'none';
+            }, 800);
+        }, 800);
     }
 });
 
@@ -69,25 +141,7 @@ function updateNavbar() {
 }
 
 /* =========================================
-   EVENT POPUP FUNCTIONS
-   ========================================= */
 
-function showEventPopup() {
-    const popup = document.getElementById('eventPopup');
-    if (popup) {
-        popup.style.display = 'flex';
-        sessionStorage.setItem('eventPopupShown', 'true');
-    }
-}
-
-function closeEventPopup() {
-    const popup = document.getElementById('eventPopup');
-    if (popup) {
-        popup.style.display = 'none';
-    }
-}
-
-/* =========================================
    2. AUTHENTICATION SYSTEM (Email OTP)
    ========================================= */
 
@@ -123,8 +177,8 @@ function closeLogin() {
 function logout() {
     localStorage.removeItem('rmjUserLoggedIn');
     localStorage.removeItem('rmjCurrentUser');
-    alert("Logged out successfully.");
-    location.reload();
+    showToast("Logged out successfully.", "info");
+    setTimeout(() => location.reload(), 800);
 }
 
 function toggleAuthMode() {
@@ -205,7 +259,7 @@ async function sendEmailOTP() {
     const email = emailInput.value.trim();
 
     if (!email || !email.includes('@')) {
-        alert("Please enter a valid email address.");
+        showToast("Please enter a valid email address.", "error");
         return;
     }
 
@@ -238,15 +292,15 @@ async function sendEmailOTP() {
             purpose: purposeText
         });
 
-        alert("📧 OTP sent to your email!");
+        showToast("OTP sent to your email!", "success");
         otpBtn.innerText = "📧 Resend OTP";
         otpBtn.disabled = false;
         otpGroup.style.display = 'block';
         document.getElementById('userOTP').focus();
 
     } catch (err) {
-        // Fallback: Show OTP in alert if email fails
-        alert(`📧 Your OTP Code is: ${otp}\n\n(Email delivery issue - use this code)`);
+        // Fallback: Show OTP in toast if email fails
+        showToast(`Your OTP Code is: ${otp} (Email delivery issue)`, "info", 10000);
         otpBtn.innerText = "📧 Resend OTP";
         otpBtn.disabled = false;
         otpGroup.style.display = 'block';
@@ -274,12 +328,33 @@ function verifyLocalOTP(email, otp) {
     return { success: true, message: "OTP verified!", purpose: storedData.purpose };
 }
 
+// === SERVER BANNER HELPERS ===
+function showServerBanner() {
+    const banner = document.getElementById('serverBanner');
+    if (banner) banner.style.display = 'block';
+}
+
+function hideServerBanner() {
+    const banner = document.getElementById('serverBanner');
+    if (banner) banner.style.display = 'none';
+}
+
+// === BUTTON LOADING STATE ===
+function setButtonLoading(btn, text) {
+    btn.disabled = true;
+    btn.innerHTML = `<span class="btn-spinner"></span> ${text}`;
+}
+
+function resetButton(btn, text) {
+    btn.disabled = false;
+    btn.innerHTML = text;
+}
+
 // === HANDLE AUTH (Login with Password, Signup/Forgot with Local OTP Verification) ===
 async function handleAuth(event) {
     event.preventDefault();
     const btn = document.getElementById('submitBtn');
     const originalText = btn.innerText;
-    btn.innerText = "Connecting to server...";
 
     const email = document.getElementById('userEmail').value.trim();
     const password = document.getElementById('userPassword')?.value || '';
@@ -288,38 +363,42 @@ async function handleAuth(event) {
     try {
         if (authMode === 'login') {
             // Login with email + password (using backend)
-            btn.innerText = "Logging in...";
-            const response = await fetchWithTimeout(`${BACKEND_URL}/api/login`, {
+            setButtonLoading(btn, "Logging in...");
+            showServerBanner();
+
+            const response = await fetchWithRetry(`${BACKEND_URL}/api/login`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email, password })
             });
 
+            hideServerBanner();
             const result = await response.json();
 
             if (result.success) {
                 localStorage.setItem('rmjUserLoggedIn', 'true');
                 localStorage.setItem('rmjCurrentUser', JSON.stringify(result.user));
-                alert(`Welcome back, ${result.user.name}!`);
+                showToast(`Welcome back, ${result.user.name}!`, "success");
                 closeLogin();
                 const redirect = localStorage.getItem('redirectAfterLogin');
-                if (redirect) {
-                    localStorage.removeItem('redirectAfterLogin');
-                    window.location.href = redirect;
-                } else {
-                    location.reload();
-                }
+                setTimeout(() => {
+                    if (redirect) {
+                        localStorage.removeItem('redirectAfterLogin');
+                        window.location.href = redirect;
+                    } else {
+                        location.reload();
+                    }
+                }, 800);
             } else {
-                alert(result.message || "Invalid email or password.");
-                btn.innerText = originalText;
+                showToast(result.message || "Invalid email or password.", "error");
+                resetButton(btn, originalText);
             }
         }
         else if (authMode === 'signup') {
             const name = document.getElementById('userName')?.value.trim() || '';
 
             if (!otp) {
-                alert("Please get an OTP first and enter it.");
-                btn.innerText = originalText;
+                showToast("Please get an OTP first and enter it.", "error");
                 return;
             }
 
@@ -329,57 +408,59 @@ async function handleAuth(event) {
 
                 if (verifyResult.success) {
                     otpVerified = true;
-                    alert("Email verified! Now set your password.");
+                    showToast("Email verified! Now set your password.", "success");
                     document.getElementById('passGroup').style.display = 'block';
                     document.getElementById('submitBtn').innerText = "Create Account";
                     document.getElementById('userPassword').focus();
                 } else {
-                    alert(verifyResult.message);
+                    showToast(verifyResult.message, "error");
                 }
-                btn.innerText = originalText;
                 return;
             }
 
             // OTP already verified, now create account via backend
             if (!name || !password) {
-                alert("Please enter your name and password.");
-                btn.innerText = originalText;
+                showToast("Please enter your name and password.", "error");
                 return;
             }
 
-            btn.innerText = "Creating account...";
-            const response = await fetchWithTimeout(`${BACKEND_URL}/api/signup-email`, {
+            setButtonLoading(btn, "Creating account...");
+            showServerBanner();
+
+            const response = await fetchWithRetry(`${BACKEND_URL}/api/signup-email`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ name, email, password, otp })
             });
 
+            hideServerBanner();
             const result = await response.json();
 
             if (result.success) {
                 delete localOtpStore[email]; // Clean up local OTP
-                alert(`Account created successfully! Welcome, ${name}!`);
+                showToast(`Account created! Welcome, ${name}!`, "success");
                 localStorage.setItem('rmjUserLoggedIn', 'true');
                 localStorage.setItem('rmjCurrentUser', JSON.stringify({ name, email }));
                 closeLogin();
                 const redirect = localStorage.getItem('redirectAfterLogin');
-                if (redirect) {
-                    localStorage.removeItem('redirectAfterLogin');
-                    window.location.href = redirect;
-                } else {
-                    location.reload();
-                }
+                setTimeout(() => {
+                    if (redirect) {
+                        localStorage.removeItem('redirectAfterLogin');
+                        window.location.href = redirect;
+                    } else {
+                        location.reload();
+                    }
+                }, 800);
             } else {
-                alert(result.message || "Failed to create account.");
-                btn.innerText = originalText;
+                showToast(result.message || "Failed to create account.", "error");
+                resetButton(btn, originalText);
             }
         }
         else if (authMode === 'forgot') {
             const newPassword = document.getElementById('newPassword')?.value || '';
 
             if (!otp) {
-                alert("Please get an OTP first and enter it.");
-                btn.innerText = originalText;
+                showToast("Please get an OTP first and enter it.", "error");
                 return;
             }
 
@@ -389,51 +470,53 @@ async function handleAuth(event) {
 
                 if (verifyResult.success) {
                     otpVerified = true;
-                    alert("OTP verified! Now set your new password.");
+                    showToast("OTP verified! Now set your new password.", "success");
                     document.getElementById('newPassGroup').style.display = 'block';
                     document.getElementById('submitBtn').innerText = "Reset Password";
                     document.getElementById('newPassword').focus();
                 } else {
-                    alert(verifyResult.message);
+                    showToast(verifyResult.message, "error");
                 }
-                btn.innerText = originalText;
                 return;
             }
 
             // OTP verified, now reset password via backend
             if (!newPassword) {
-                alert("Please enter a new password.");
-                btn.innerText = originalText;
+                showToast("Please enter a new password.", "error");
                 return;
             }
 
-            btn.innerText = "Resetting password...";
-            const response = await fetchWithTimeout(`${BACKEND_URL}/api/reset-password-email`, {
+            setButtonLoading(btn, "Resetting password...");
+            showServerBanner();
+
+            const response = await fetchWithRetry(`${BACKEND_URL}/api/reset-password-email`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email, otp, newPassword })
             });
 
+            hideServerBanner();
             const result = await response.json();
 
             if (result.success) {
                 delete localOtpStore[email]; // Clean up local OTP
-                alert("Password reset successfully! Please login.");
+                showToast("Password reset successfully! Please login.", "success");
                 authMode = 'login';
                 otpVerified = false;
                 updateModalUI();
             } else {
-                alert(result.message || "Failed to reset password.");
+                showToast(result.message || "Failed to reset password.", "error");
             }
-            btn.innerText = originalText;
+            resetButton(btn, originalText);
         }
     } catch (err) {
+        hideServerBanner();
         if (err.message === 'SERVER_TIMEOUT') {
-            alert("⏳ Server is waking up (free hosting). Please try again in 30 seconds.");
+            showToast("Server is waking up (free hosting). Please try again in 30 seconds.", "info", 6000);
         } else {
-            alert("❌ Connection Error. The server may be temporarily unavailable. Please try again.");
+            showToast("Connection error. Server may be temporarily unavailable.", "error");
         }
-        btn.innerText = originalText;
+        resetButton(btn, originalText);
     }
 }
 
@@ -486,7 +569,7 @@ function estimate() {
     const rate = parseFloat(typeInput.value);
 
     if (!area || area <= 0) {
-        alert('Please enter a valid area.');
+        showToast('Please enter a valid area.', 'error');
         return;
     }
 
@@ -545,14 +628,6 @@ function w3RemoveClass(element, name) {
     element.className = arr1.join(" ");
 }
 
-const styleSheet = document.createElement("style");
-styleSheet.innerText = `
-    .column { display: none; }
-    .show { display: block; animation: fadeIn 0.5s; }
-    @keyframes fadeIn { from { opacity:0; transform: translateY(10px); } to { opacity:1; transform: translateY(0); } }
-`;
-document.head.appendChild(styleSheet);
-
 window.onclick = function (event) {
     const modal = document.getElementById('loginModal');
     if (event.target == modal) {
@@ -566,7 +641,7 @@ window.onclick = function (event) {
 
 // Initialize scroll animations after page loads
 window.addEventListener('load', () => {
-    // Wait for intro animation to finish (matches the 800ms delay in intro)
+    // Wait for intro animation to finish
     setTimeout(initScrollAnimations, 1000);
 });
 
@@ -578,6 +653,8 @@ function initScrollAnimations() {
         '.hero-container h1',
         '.hero-container p',
         '.cards-wrapper .card',
+        '.stat-item',
+        '.feature-card',
         // Common elements across all pages
         '.content-section h1',
         '.content-section h2',
@@ -604,6 +681,7 @@ function initScrollAnimations() {
         '.project-card',
         '.floor-card',
         '.column',
+        '.step-card',
         // Real Estate page
         '.property-card',
         '.listing-card',
