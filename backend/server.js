@@ -115,7 +115,8 @@ app.get('/', (req, res) => {
     res.send("✅ Backend is working! EmailJS handles OTP emails on frontend.");
 });
 
-app.listen(5000, '0.0.0.0', () => {
-    console.log("🚀 Server running on Port 5000");
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, '0.0.0.0', () => {
+    console.log(`🚀 Server running on Port ${PORT}`);
     console.log("📧 OTP emails are now sent via EmailJS (frontend)");
 });
