@@ -94,6 +94,20 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
+    // Bound event dates from today up to 2 years in the future
+    const today = new Date();
+    const futureDate = new Date();
+    futureDate.setFullYear(today.getFullYear() + 2);
+    
+    const maxDateStr = futureDate.toISOString().split('T')[0];
+    const todayStr = today.toISOString().split('T')[0];
+    
+    const eventDateInput = document.getElementById('eventDateInput');
+    if (eventDateInput) {
+        eventDateInput.setAttribute('min', todayStr);
+        eventDateInput.setAttribute('max', maxDateStr);
+    }
 });
 
 /* =========================================

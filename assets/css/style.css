@@ -730,8 +730,13 @@ input:focus, select:focus, textarea:focus {
     box-shadow: 0 0 0 3px var(--gold-glow);
 }
 
-input::placeholder {
+input::placeholder, textarea::placeholder {
     color: var(--text-muted);
+}
+
+option {
+    background-color: var(--navy-900);
+    color: var(--text-primary);
 }
 
 /* ---- 13. TOAST NOTIFICATIONS ---- */
