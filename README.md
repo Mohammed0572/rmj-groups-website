@@ -15,30 +15,12 @@ A modern, full-stack web application built for RMJ Groups. It features a scalabl
 
 ## Architecture Overview
 
-The project was completely re-architected to follow modern software development practices. 
+The project follows a decoupled, full-stack architecture separated into two distinct environments:
 
-| Feature | Details |
-| --- | --- |
-| **Frontend** | Single Page Application (SPA) built with React and Vite. |
-| **Backend** | Express.js server following the MVC (Model-View-Controller) design pattern. |
-| **Database** | MongoDB for storing user data securely. |
-| **Authentication** | Secure JSON Web Tokens (JWT) for stateless sessions. |
-| **Security** | Industry-standard bcrypt password hashing. |
-
----
-
-## Features
-
-### Frontend (React + Vite)
-- **Component-Based:** Reusable UI components like Navbars, Footers, and Modals.
-- **Client-Side Routing:** Lightning-fast navigation using React Router without full page reloads.
-- **Modern Styling:** Customized, responsive CSS tailored for RMJ Groups.
-
-### Backend (Express + MVC)
-- **Models:** Mongoose schemas defining database structures.
-- **Controllers:** Clean, isolated business logic for authentication and data management.
-- **Routes:** Modular API endpoints.
-- **Security:** Passwords are never stored in plain text. Secure token generation for API access.
+| Area | Location | Tech Stack | Details |
+| --- | --- | --- | --- |
+| **Frontend** | `/` (Root) | React, Vite | Single Page Application (SPA) with React Router and custom CSS. |
+| **Backend** | `/server` | Express.js, MongoDB | REST API following the MVC pattern. Uses bcrypt and JWT for security. |
 
 ---
 
@@ -49,7 +31,7 @@ The project was completely re-architected to follow modern software development 
 - [pnpm](https://pnpm.io/) (or npm/yarn)
 - MongoDB instance (local or Atlas)
 
-### Installation
+### Installation & Setup
 
 1. **Clone the repository:**
    ```bash
@@ -57,36 +39,44 @@ The project was completely re-architected to follow modern software development 
    cd rmj-groups-website
    ```
 
-2. **Install Root Dependencies:**
+2. **Install Frontend Dependencies:**
+   The root directory acts as the frontend React application.
    ```bash
    pnpm install
    ```
 
-3. **Install Frontend Dependencies:**
+3. **Install Backend Dependencies:**
+   The backend API lives inside the `server/` folder.
    ```bash
-   cd frontend
+   cd server
    pnpm install
    cd ..
    ```
 
 4. **Environment Setup:**
-   Create a `.env` file in the root directory:
-   ```env
-   PORT=5000
-   MONGO_URI=your_mongodb_connection_string
-   JWT_SECRET=your_super_secret_key
+   Copy the example environment file in the root directory:
+   ```bash
+   cp .env.example .env
    ```
+   Then fill in your MongoDB URI and a strong JWT secret in the newly created `.env` file.
 
-### Running the Application
+### Running the Application (Development)
 
-To run both the backend server and the frontend client simultaneously:
+You can run both the Vite React frontend and the Express backend simultaneously from the root directory using:
 
 ```bash
-pnpm run dev
+pnpm run dev:all
 ```
 
-- **Frontend:** [http://localhost:5173](http://localhost:5173)
-- **Backend API:** [http://localhost:5000](http://localhost:5000)
+- **Frontend Application:** [http://localhost:5173](http://localhost:5173)
+- **Backend API Server:** [http://localhost:5000](http://localhost:5000)
+
+---
+
+## Deployment Configuration
+
+- **Frontend:** Pre-configured for deployment on **Netlify**. The `netlify.toml` file in the root handles the Vite build (`pnpm run build`) and SPA routing redirects automatically.
+- **Backend:** The `server/` directory is isolated and ready to be deployed on platforms like Render, Railway, or Heroku.
 
 ---
 
@@ -100,4 +90,4 @@ pnpm run dev
 
 ## License
 
-© 2026 RMJ Groups. All Rights Reserved.
+This project is licensed under the [MIT License](LICENSE).
