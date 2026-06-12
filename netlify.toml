@@ -1,0 +1,16 @@
+[build]
+  # The directory where Vite outputs the built files
+  publish = "dist"
+  # The command to build the Vite React app
+  command = "npm run build"
+  
+  # The directory where Vite outputs the built files
+  publish = "dist"
+
+# Single Page Application (SPA) Routing Configuration
+# This ensures that when a user refreshes on a page like /about-us,
+# Netlify redirects them to the React index.html instead of showing a 404.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
