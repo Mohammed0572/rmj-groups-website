@@ -25,95 +25,18 @@ mongoose.connect(MONGO_URI)
     .then(() => console.log('✅ Connected to MongoDB Atlas'))
     .catch(err => console.error('❌ MongoDB connection error:', err));
 
-// --- USER SCHEMA ---
-const userSchema = new mongoose.Schema({
-    name: { type: String, required: true },
-    email: { type: String, required: true, unique: true, lowercase: true, trim: true },
-    password: { type: String, required: true },
-    createdAt: { type: Date, default: Date.now }
-});
-
-const User = mongoose.model('User', userSchema);
-
-// --- SECURITY ---
-const hashPassword = (pwd) => crypto.createHash('sha256').update(pwd).digest('hex');
-
 // --- ROUTES ---
-
-// LOGIN
-app.post('/api/login', async (req, res) => {
-    try {
-        const { email, password } = req.body;
-        const user = await User.findOne({ email, password: hashPassword(password) });
-
-        if (user) {
-            console.log(`[LOGIN] Success: ${email}`);
-            res.json({ success: true, message: "Login Successful", user: { name: user.name } });
-        } else {
-            console.log(`[LOGIN] Failed: Invalid credentials for ${email}`);
-            res.status(401).json({ success: false, message: "Invalid email or password" });
-        }
-    } catch (err) {
-        console.error(`[LOGIN ERROR]:`, err.message);
-        res.status(500).json({ success: false, message: "Server error" });
-    }
-});
-
-// SIGNUP (OTP verified on frontend via EmailJS)
-app.post('/api/signup-email', async (req, res) => {
-    try {
-        const { name, email, password } = req.body;
-
-        // Check if user already exists
-        const existing = await User.findOne({ email });
-        if (existing) {
-            console.log(`[SIGNUP] Failed: Email already exists (${email})`);
-            return res.status(400).json({ success: false, message: "Email already exists" });
-        }
-
-        // Create new user
-        const newUser = await User.create({
-            name,
-            email,
-            password: hashPassword(password)
-        });
-
-        console.log(`[SIGNUP] ✅ New User Created: ${name} (${email})`);
-        res.status(201).json({ success: true, message: "Account Created!", user: { name, email } });
-    } catch (err) {
-        console.error(`[SIGNUP ERROR]:`, err.message);
-        res.status(500).json({ success: false, message: "Server error" });
-    }
-});
-
-// RESET PASSWORD (OTP verified on frontend via EmailJS)
-app.post('/api/reset-password-email', async (req, res) => {
-    try {
-        const { email, newPassword } = req.body;
-
-        const user = await User.findOneAndUpdate(
-            { email },
-            { password: hashPassword(newPassword) },
-            { new: true }
-        );
-
-        if (!user) {
-            console.log(`[RESET] Failed: User not found (${email})`);
-            return res.status(400).json({ success: false, message: "User not found" });
-        }
-
-        console.log(`[RESET] 🔑 Password Reset for: ${email}`);
-        res.json({ success: true, message: "Password reset successfully!" });
-    } catch (err) {
-        console.error(`[RESET ERROR]:`, err.message);
-        res.status(500).json({ success: false, message: "Server error" });
-    }
-});
+const authRoutes = require('./routes/authRoutes');
+app.use('/api/auth', authRoutes);
 
 // Health check
-app.get('/', (req, res) => {
-    res.send("✅ Backend is working! EmailJS handles OTP emails on frontend.");
+app.get('/api/health', (req, res) => {
+    res.send("✅ Backend is working! MVC Architecture enabled.");
 });
+
+// Serve frontend static files
+const path = require('path');
+app.use(express.static(path.join(__dirname, '../')));
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, '0.0.0.0', () => {
